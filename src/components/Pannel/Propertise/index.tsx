@@ -1,11 +1,11 @@
 
 
 const PropertisePannel = () => {
-    return (
-        <div>
-            Propertise
-        </div>
-    )
+  return (
+      <div>
+          Propertise
+      </div>
+  )
 }
 
 export default PropertisePannel

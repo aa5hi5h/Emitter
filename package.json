@@ -9,7 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@craftjs/core": "^0.2.10",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.7",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -17,6 +22,7 @@
     "lucide-react": "^0.428.0",
     "next": "14.2.5",
     "react": "^18",
+    "react-contenteditable": "^3.3.7",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7"
