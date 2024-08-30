@@ -5,11 +5,15 @@ import { ChevronDown, Redo, Undo } from "lucide-react"
 import {Frame, Element, useEditor} from "@craftjs/core"
 import { Container } from "../Components/Props/Container"
 import UndoOptions from "./UndoOptions"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useHover } from "@/app/Context/hoverContext"
+import { useSelection } from "@/app/Context/selectionContext"
 const EditorPannel = () => {
 
 
     const [viewMode,setViewMode] = useState<string>("monitor")
+    const { hoveredElement, setHoveredElement } = useHover();
+    const { selectedElement, setSelectedElement } = useSelection();
 
     const {actions,query} = useEditor()
     
@@ -27,10 +31,17 @@ const EditorPannel = () => {
           }
     }
 
+    
+
     const handleViewMode = (view:string) => {
         console.log(`View changed to: ${view}`);
         setViewMode(view)
     }
+
+    const handleClick = (e: React.MouseEvent) => {
+      e.stopPropagation(); 
+      setSelectedElement({id:"EditorPannel", type:"Pannel"}); 
+    };
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex flex-row items-center py-2  border-b border-zinc-300 justify-between ">
@@ -50,10 +61,23 @@ const EditorPannel = () => {
                 </div>
             </div>
             
-            <div className={`h-full w-[99%] ${viewScreen()} bg-white border-[1px] border-slate-300 rounded-md m-1  p-1`}>
+            <div
+        className={`h-full w-[99%] ${viewScreen()} bg-white rounded-md m-1 p-1 transition-all duration-150 ${
+          selectedElement === null
+            ? hoveredElement?.id === "EditorPannel"
+              ? "border-blue-400 border-[2px]"
+              : "border-[1px] border-slate-300"
+            : selectedElement.id === "EditorPannel"
+            ? "border-blue-400 border-[2px] border-solid"
+            : "border-[1px] border-slate-300"
+        }`}
+        onMouseEnter={() => setHoveredElement({id:"EditorPannel",type:"Pannel"})}
+        onMouseLeave={() => setHoveredElement({id:"", type:""})}
+        onClick={handleClick}
+      >
         <Frame>
           <Element is="div" canvas>
-            <p>Start building</p>
+            <p>deb</p>
           </Element>
         </Frame>
       </div>

@@ -9,8 +9,14 @@ import { CustomButton } from "@/components/Pannel/Components/Props/Button";
 import { CustomImage } from "@/components/Pannel/Components/Props/Image";
 import { CustomBanner } from "@/components/Pannel/Components/Props/Banner";
 import { CustomDiv } from "@/components/Pannel/Components/Props/Div";
+import { HoverProvider } from "./Context/hoverContext";
+import { SelectionProvider } from "./Context/selectionContext";
+
+
 export default function Home() {
   return (
+    <SelectionProvider>
+    <HoverProvider>
     <Editor resolver={{Text,Container,CustomButton,CustomImage,CustomBanner,CustomDiv}}>
     <div className="grid grid-cols-6 h-[90vh] ">
      <div className="col-span-1 border-r border-slate-300 h-full">
@@ -24,5 +30,7 @@ export default function Home() {
      </div>
     </div>
     </Editor>
+    </HoverProvider>
+    </SelectionProvider>
   );
 }

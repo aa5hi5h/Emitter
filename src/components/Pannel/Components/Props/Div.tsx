@@ -1,6 +1,9 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useNode } from "@craftjs/core";
+import HoverableWrapper from "../wrappers/hoverWrapper";
+import ClickableOverlay from "../../Utils/nearestElement";
+import { useSelection } from "@/app/Context/selectionContext";
 
 interface CustomDivProps {
   backgroundColor?: string;
@@ -8,24 +11,44 @@ interface CustomDivProps {
   children?: React.ReactNode;
 }
 
-export const CustomDiv = ({ backgroundColor, padding, children }: CustomDivProps) => {
+export const CustomDiv = ({ backgroundColor, padding = "10px", children }: CustomDivProps) => {
   const {
     connectors: { connect, drag },
+    id,
     actions: { setProp },
-  } = useNode();
+  } = useNode((node) => ({
+    id: node.id,
+  }));
+
+  const [isOverlayVisible, setOverlayVisible] = useState(false);
+  const { setSelectedElement } = useSelection();
+
+  const handleClick = () => {
+    setSelectedElement({ id, type: "div" });
+    setOverlayVisible(true);
+  };
 
   return (
-    <div
-      ref={(ref) => {
-        if (ref) {
-          connect(drag(ref));
-        }
-      }}
-      style={{ backgroundColor, padding }}
-      onClick={() => setProp((props: CustomDivProps) => props)}
-    >
-      {children}
-    </div>
+    <>
+      {isOverlayVisible && <ClickableOverlay onClickOutside={() => setOverlayVisible(false)} />}
+      <HoverableWrapper id={id} type="div">
+        <div
+          ref={(ref) => {
+            if (ref) {
+              connect(drag(ref));
+            }
+          }}
+          style={{ backgroundColor, padding }}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick();
+          }}
+          className="selectable" // Add a class to target
+        >
+          {children}
+        </div>
+      </HoverableWrapper>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useNode } from "@craftjs/core";
-
+import HoverableWrapper from "../wrappers/hoverWrapper"; 
 
 interface ImageProps {
   src: string;
@@ -10,21 +10,31 @@ interface ImageProps {
   height?: string | number;
 }
 
-export const CustomImage = ({ src, alt = "image", width = "100%", height = "auto" }: ImageProps) => {
+export const CustomImage = ({
+  src,
+  alt = "image",
+  width = "100%",
+  height = "auto",
+}: ImageProps) => {
   const {
     connectors: { connect, drag },
-  } = useNode();
+    id, 
+  } = useNode((node) => ({
+    id: node.id, 
+  }));
 
   return (
-    <div
-      ref={(ref) => {
-        if (ref) {
-          connect(drag(ref));
-        }
-      }}
-      style={{ display: "inline-block" }}
-    >
-      <img src={src} alt={alt} width={width} height={height} />
-    </div>
+    <HoverableWrapper id={id} type="image">
+      <div
+        ref={(ref) => {
+          if (ref) {
+            connect(drag(ref));
+          }
+        }}
+        style={{ display: "inline-block" }}
+      >
+        <img src={src} alt={alt} width={width} height={height} />
+      </div>
+    </HoverableWrapper>
   );
 };
