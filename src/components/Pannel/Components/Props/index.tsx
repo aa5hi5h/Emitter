@@ -52,7 +52,7 @@ const ComponentsProps = () => {
                 <Button 
                 variant={"outline"}
                 ref={(ref) => {
-                    if(ref){ connectors.create(ref, <CustomText text="Draggable Text" />)}}} 
+                    if(ref){ connectors.create(ref, <CustomText text="Draggable Text" fontSize={18} color={"black"} />)}}} 
                 className="w-[100px] flex flex-col h-[80px]"><Text /><h4>Text</h4></Button>
                 <Button 
                 variant={"outline"}

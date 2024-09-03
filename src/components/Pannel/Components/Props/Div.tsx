@@ -11,7 +11,19 @@ interface CustomDivProps {
   children?: React.ReactNode;
 }
 
-export const CustomDiv = ({ backgroundColor, padding = "10px", children }: CustomDivProps) => {
+interface CraftComponent extends React.FC<CustomDivProps> {
+  craft: {
+    props:{
+      backgroundColor:string,
+      padding: string
+    },
+    related: {
+      settings: React.FC;
+    };
+  };
+}
+
+export const CustomDiv:CraftComponent = ({ backgroundColor, padding = "10px", children }) => {
   const {
     connectors: { connect, drag },
     id,
@@ -43,7 +55,7 @@ export const CustomDiv = ({ backgroundColor, padding = "10px", children }: Custo
             e.stopPropagation();
             handleClick();
           }}
-          className="selectable" // Add a class to target
+          className="selectable" 
         >
           {children}
         </div>
