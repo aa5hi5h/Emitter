@@ -8,12 +8,15 @@ import UndoOptions from "./UndoOptions"
 import { useEffect, useState } from "react"
 import { useHover } from "@/app/Context/hoverContext"
 import { useSelection } from "@/app/Context/selectionContext"
+import { useColorPicker } from "@/app/Context/ColorPickerContext"
+import { ChromePicker } from "react-color"
 const EditorPannel = () => {
 
 
     const [viewMode,setViewMode] = useState<string>("monitor")
     const { hoveredElement, setHoveredElement } = useHover();
     const { selectedElement, setSelectedElement } = useSelection();
+    const { pickerVisible, ColorBorder, setPickerVisible, setColorBorder } = useColorPicker();
 
     const {actions,query} = useEditor()
     
@@ -31,6 +34,9 @@ const EditorPannel = () => {
           }
     }
 
+
+    
+
     
 
     const handleViewMode = (view:string) => {
@@ -42,6 +48,10 @@ const EditorPannel = () => {
       e.stopPropagation(); 
       setSelectedElement({id:"EditorPannel", type:"Pannel"}); 
     };
+
+     const handleColorChange = (color: any) => {
+    setColorBorder(color.hex);
+  };
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex flex-row items-center py-2  border-b border-zinc-300 justify-between ">

@@ -4,64 +4,118 @@ import ContentEditable from "react-contenteditable";
 import { useNode } from "@craftjs/core";
 import { Button } from "@/components/ui/button";
 import HoverableWrapper from "../wrappers/hoverWrapper";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
+import { Chilanka } from "next/font/google";
 
 interface ButtonProps {
-  size?: "default" | "sm" | "lg";
-  variant?: "default" | "ghost" | "secondary" | "link" | "destructive" | "outline";
-  color?: "default" | "inherit" | "primary" | "secondary";
   children: string;
+  opacity: number;
+  margin: number;
+  padding: number;
+  borderRadius: number;
+  border: number;
+  borderColor: string;
+  width: number;
+  height: number;
+  maxWidth: number;
+  minWidth: number;
+  textAlign: string;
+  fontFamily: string;
+  fontSize: number;
+  fontWeight: string;
+  color: string;
+  letterSpacing: string;
+  lineHeight: string;
 }
-
 interface CraftComponent extends React.FC<ButtonProps> {
   craft: {
+    props: ButtonProps;
     related: {
       settings: React.FC;
     };
   };
 }
 
-export const CustomButton: React.FC<ButtonProps> = ({ size, variant, color, children }) => {
+export const CustomButton: CraftComponent = ({
+  children,
+  opacity,
+  margin,
+  padding,
+  borderRadius,
+  border,
+  borderColor,
+  width,
+  height,
+  maxWidth,
+  minWidth,
+  textAlign,
+  fontFamily,
+  fontSize,
+  fontWeight,
+  color,
+  letterSpacing,
+  lineHeight
+}) => {
   const {
     connectors: { connect, drag },
-    id, 
-    setProp,
+    id,
+    actions: { setProp }
   } = useNode((node) => ({
-    id: node.id, 
-    children: node.data.props.children,
+    id: node.id,
+    opacity: node.data.props.opacity,
+    margin: node.data.props.margin,
+    padding: node.data.props.padding,
+    borderRadius: node.data.props.borderRadius,
+    border: node.data.props.border,
+    borderColor: node.data.props.borderColor,
+    width: node.data.props.width,
+    height: node.data.props.height,
+    maxWidth: node.data.props.maxWidth,
+    minWidth: node.data.props.minWidth,
+    textAlign: node.data.props.textAlign,
+    fontFamily: node.data.props.fontFamily,
+    fontSize: node.data.props.fontSize,
+    fontWeight: node.data.props.fontWeight,
+    color: node.data.props.color,
+    letterSpacing: node.data.props.letterSpacing,
+    lineHeight: node.data.props.lineHeight
   }));
-
-  const sizeClasses = {
-    small: "py-1 px-2 text-sm",
-    medium: "py-2 px-4 text-base",
-    large: "py-3 px-6 text-lg",
-  };
-
-  const variantClasses = {
-    text: "text-blue-500",
-    outlined: "border border-blue-500 text-blue-500",
-    contained: "bg-blue-500 text-white",
-  };
-
-  const colorClasses = {
-    default: "bg-white hover:bg-gray-100 text-black",
-    primary: "bg-blue-500 hover:bg-blue-700 text-white",
-    secondary: "bg-gray-500 hover:bg-gray-700 text-white",
-  };
 
   const [editable, setEditable] = useState(false);
 
   return (
-    <HoverableWrapper id={id} type="button"> 
+    <HoverableWrapper id={id} type="button">
       <div
         ref={(ref) => {
           if (ref) {
             connect(drag(ref));
           }
         }}
+        style={{
+          opacity,
+          margin: `${margin}px`,
+          padding: `${padding}px`,
+          borderRadius: `${borderRadius}px`,
+          border: `${border}px solid ${borderColor}`,
+          width: width ? `${width}px` : undefined,
+          height: height ? `${height}px` : undefined,
+          maxWidth: maxWidth ? `${maxWidth}px` : undefined,
+          minWidth: minWidth ? `${minWidth}px` : undefined
+        }}
       >
-        <Button size={size} variant={variant} color={color}>
+         <Button >
           <ContentEditable
             html={children}
+            style={{ 
+              textAlign, 
+              fontFamily, 
+              fontSize: `${fontSize}px`, 
+              fontWeight, 
+              color, 
+              letterSpacing, 
+              lineHeight 
+            }}
             disabled={!editable}
             onClick={() => setEditable(true)}
             onBlur={() => setEditable(false)}
@@ -76,83 +130,340 @@ export const CustomButton: React.FC<ButtonProps> = ({ size, variant, color, chil
   );
 };
 
-// Settings component for the Button
+
 const ButtonSettings: React.FC = () => {
-  const {
+  const { 
     actions: { setProp },
-    props,
+    children,
+    opacity,
+    margin,
+    padding,
+    borderRadius,
+    border,
+    borderColor,
+    width,
+    height,
+    maxWidth,
+    minWidth,
+    textAlign,
+    fontFamily,
+    fontSize,
+    fontWeight,
+    color,
+    letterSpacing,
+    lineHeight,
   } = useNode((node) => ({
-    props: node.data.props,
+    children: node.data.props.children,
+    opacity: node.data.props.opacity,
+    margin: node.data.props.margin,
+    padding: node.data.props.padding,
+    borderRadius: node.data.props.borderRadius,
+    border: node.data.props.border,
+    borderColor: node.data.props.borderColor,
+    width: node.data.props.width,
+    height: node.data.props.height,
+    maxWidth: node.data.props.maxWidth,
+    minWidth: node.data.props.minWidth,
+    textAlign: node.data.props.textAlign,
+    fontFamily: node.data.props.fontFamily,
+    fontSize: node.data.props.fontSize,
+    fontWeight: node.data.props.fontWeight,
+    color: node.data.props.color,
+    letterSpacing: node.data.props.letterSpacing,
+    lineHeight: node.data.props.lineHeight,
   }));
 
+
+  const handleOpacityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setProp((props: any) => (props.opacity = parseFloat(event.target.value)));
+  };
+
   return (
-    <div className="p-2 border border-gray-200 rounded shadow-md bg-white">
-    {/* Size settings */}
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Size</label>
-      <div className="flex space-x-2">
-        {["small", "medium", "large"].map((size) => (
-          <label key={size} className="flex items-center">
-            <input
-              type="radio"
-              name="size"
-              value={size}
-              checked={props.size === size}
-              onChange={() => setProp((props: any) => (props.size = size))}
-              className="mr-1"
-            />
-            {size.charAt(0).toUpperCase() + size.slice(1)}
-          </label>
-        ))}
+    <div className="flex flex-col space-y-4">
+      <div>
+      <div className="border-b border-zinc-300 px-2 py-3">
+        <label className="text-sm text-zinc-900 font-semibold">Link</label>
       </div>
-    </div>
+      <div className="flex flex-col space-y-4">
+        <div className="border-b border-zinc-300 px-2 pt-2 ">
+          <label className="text-sm text-zinc-900 font-semibold">Sizing</label>
+          <span className="flex items-center justify-between ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="width">Width</label>
+            <input
+              id="width"
+              type="number"
+              value={width || 0}
+              onChange={(e) => setProp((props: any) => (props.width = parseInt(e.target.value)))
+              }
+              className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+            />
+          </span>
 
-    {/* Variant settings */}
-    <div className="mb-4">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Variant</label>
-      <div className="flex space-x-2">
-        {["text", "outlined", "contained"].map((variant) => (
-          <label key={variant} className="flex items-center">
+          <span className="flex items-center justify-between ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="height">Height</label>
             <input
-              type="radio"
-              name="variant"
-              value={variant}
-              checked={props.variant === variant}
-              onChange={() => setProp((props: any) => (props.variant = variant))}
-              className="mr-1"
+              id="height"
+              type="number"
+              value={height || 0}
+              onChange={(e) => setProp((props: any) => (props.height = parseInt(e.target.value)))
+              }
+              className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
             />
-            {variant.charAt(0).toUpperCase() + variant.slice(1)}
-          </label>
-        ))}
-      </div>
-    </div>
+          </span>
 
-    {/* Color settings */}
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">Color</label>
-      <div className="flex space-x-2">
-        {["default", "primary", "secondary"].map((color) => (
-          <label key={color} className="flex items-center">
+          <span className="flex items-center justify-between ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="maxWidth">Max Width</label>
             <input
-              type="radio"
-              name="color"
-              value={color}
-              checked={props.color === color}
-              onChange={() => setProp((props: any) => (props.color = color))}
-              className="mr-1"
+              id="maxWidth"
+              type="number"
+              value={maxWidth || 0}
+              onChange={(e) => setProp((props: any) => (props.maxWidth = parseInt(e.target.value)))
+              }
+              className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
             />
-            {color.charAt(0).toUpperCase() + color.slice(1)}
-          </label>
-        ))}
+          </span>
+
+          <span className="flex items-center justify-between ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="minWidth">Min Width</label>
+            <input
+              id="minWidth"
+              type="number"
+              value={minWidth || 0}
+              onChange={(e) => setProp((props: any) => (props.minWidth = parseInt(e.target.value)))
+              }
+              className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+            />
+          </span>
+        </div>
       </div>
+
+      <div className="flex flex-col space-y-4">
+  <div className="border-b border-zinc-300 px-2 pt-2">
+  <label className="text-sm text-zinc-900 font-semibold">Text</label>
+  <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+  <label className="text-sm font-medium text-slate-600" htmlFor="positionType">Styles</label>
+  <select
+    id="styletype"
+    defaultValue="none"
+    className="border border-slate-400 bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+  >
+    <option value="Bold">Bold</option>
+    <option value="italic">Italic</option>
+    <option value="none" >none</option>
+  </select>
+  </span>
+  <span className="flex items-center  justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+  <label className="text-sm font-medium text-slate-600" htmlFor="textContent">Content</label>
+  <input
+            id="textContent"
+            type="text"
+            value={children}
+            onChange={(e) => setProp((props:any) => (props.children = e.target.value))}
+            className="border w-[7rem] border-slate-400  bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-purple-800 outline-none"
+          />
+  
+  </span>
+  <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+              <label className="text-sm font-medium text-slate-600" htmlFor="fontFamily">Font</label>
+              <select
+                id="fontFamily"
+                value={fontFamily || "Arial"}
+                onChange={(e) => setProp((props:any) => (props.fontFamily = e.target.value))}
+                className="border border-slate-400 w-[7rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+              >
+                <option value="Arial">Arial</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Verdana">Verdana</option>
+              </select>
+            </span>
+            <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="fontWeight">Weight</label>
+            <select
+              id="fontWeight"
+              value={fontWeight || "400"}
+              onChange={(e) => setProp((props: any) => (props.fontWeight = e.target.value))}
+              className="border border-slate-400 w-[7rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+            >
+              <option value="100">Thin</option>
+              <option value="200">Extra Light</option>
+              <option value="300">Light</option>
+              <option value="400">Normal</option>
+              <option value="500">Medium</option>
+              <option value="600">Semi Bold</option>
+              <option value="700">Bold</option>
+              <option value="800">Extra Bold</option>
+              <option value="900">Black</option>
+            </select>
+          </span>
+
+          <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="color">Color</label>
+            <input
+              id="color"
+              type="color"
+              value={color || "#000000"}
+              onChange={(e) => setProp((props: any) => (props.color = e.target.value))}
+              className="border rounded-lg border-gray-300"
+            />
+          </span>
+          <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="fontSize">Size</label>
+            <input
+              id="fontSize"
+              type="number"
+              value={fontSize || 16}
+              onChange={(e) => setProp((props:any) => (props.fontSize = parseInt(e.target.value, 10)))}
+              className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+            />
+          </span>
+  <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+  <label className="text-sm font-medium text-slate-600" htmlFor="letterSpacing">Spacing</label>
+  <input
+    id="letterSpacing"
+    type="number"
+    value={parseFloat(letterSpacing) || 0}  
+    onChange={(e) => {
+      const newValue = e.target.value;
+      setProp((props: any) => (props.letterSpacing = `${newValue}px`));  
+    }}
+    className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+  />
+</span>
+
+    <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+            <label className="text-sm font-medium text-slate-600" htmlFor="lineHeight">Line</label>
+            <input
+              id="lineHeight"
+              type="number"
+              value={lineHeight || "1.5"}
+              step="0.1"
+              onChange={(e) => setProp((props:any) => (props.lineHeight = `${e.target.value}`))}
+              className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+            />
+          </span>
+          <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+        <label className="text-sm font-medium text-slate-600">Align</label>
+        <div className="bg-slate-200 border-slate-300 border flex gap-2 items-center max-w-max p-1 rounded-md ml-auto">
+        <TooltipProvider>
+        <Tooltip>
+            <TooltipTrigger asChild>
+            <AlignLeft  onClick={() => setProp((props:any) => (props.textAlign = 'left'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
+    </TooltipTrigger>
+    <TooltipContent>Left</TooltipContent>
+    </Tooltip>
+    <Tooltip>
+      <TooltipTrigger asChild>
+      <AlignCenter onClick={() => setProp((props:any) => (props.textAlign = 'center'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
+      </TooltipTrigger>
+      <TooltipContent>Center</TooltipContent>
+    </Tooltip>
+    <Tooltip>
+      <TooltipTrigger asChild>
+      <AlignRight  onClick={() => setProp((props:any) => (props.textAlign = 'right'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
+      </TooltipTrigger>
+      <TooltipContent>Right</TooltipContent>
+    </Tooltip>
+    <Tooltip>
+      <TooltipTrigger asChild>
+      <AlignJustify  onClick={() => setProp((props:any) => (props.textAlign = 'justify'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
+      </TooltipTrigger>
+      <TooltipContent>Justify</TooltipContent>
+    </Tooltip>
+    </TooltipProvider>
+        </div>
+      </span>     
+</div>
+</div>
+
+      <div className="flex flex-col space-y-4">
+  <div className="border-b border-zinc-300 px-2 pt-2">
+  <label className="text-sm text-zinc-900 font-semibold">Styles</label>
+  <span className="flex items-center justify-between px-[8px] ml-[8px] gap-2 mr-[4px] py-[12px]">
+          <label className="text-sm font-medium text-slate-600" htmlFor="opacity">Opacity</label>
+          <span className="bg-slate-200 border-slate-300 border flex gap-2 items-center max-w-max font-semibold p-1 text-sm rounded-md ml-auto">{Math.round(opacity * 100)}%</span>
+          <input
+            id="opacity"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={opacity}
+            onChange={handleOpacityChange}
+            className="w-[40%] h-1 bg-blue-500 rounded-full appearance-none"
+          />
+        </span>
+
+      <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+        <label className="text-sm font-medium text-slate-600" htmlFor="border">Border</label>
+        <input
+          id="border"
+          type="number"
+          value={border || 0}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            setProp((props: any) => (props.border = parseInt(newValue)));
+          }}
+          className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+        />
+      </span>
+
+      <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+        <label className="text-sm font-medium text-slate-600" htmlFor="borderRadius">Border Radius</label>
+        <input
+          id="borderRadius"
+          type="number"
+          value={borderRadius || 0}
+          onChange={(e) => {
+            const newValue = e.target.value;
+            setProp((props: any) => (props.borderRadius = parseInt(newValue)));
+          }}
+          className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
+        />
+      </span>
+
+      <div className="relative">
+      <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
+        <label className="text-sm font-medium text-slate-600" htmlFor="borderColor">Border Color</label>
+        <input
+          id="borderColor"
+          type="color"
+          value={borderColor || "#000000"}
+          onChange={(e) => setProp((props: any) => (props.borderColor = e.target.value))}
+          className="border rounded-lg border-gray-300 ml-auto"
+        />
+      </span>
     </div>
   </div>
-);
+  </div>
+      </div>
+    </div>
+  );
 };
 
-(CustomButton as CraftComponent).craft = {
-  related: {
-    settings: ButtonSettings,
+CustomButton.craft = {
+  props: {
+    children: "Button",
+    opacity: 1,
+    margin: 0,
+    padding: 0,
+    borderRadius: 0,
+    border: 0,
+    borderColor: "#000000",
+    width: 100,
+    height: 40,
+    maxWidth: 300,
+    minWidth: 50,
+    textAlign: 'left',
+    fontFamily: 'Arial',
+    fontSize: 16,
+    fontWeight: "700",
+    color: '#000000',
+    letterSpacing: '0px',
+    lineHeight: '1.5'
   },
+  related: {
+    settings: ButtonSettings
+  }
 };
-
