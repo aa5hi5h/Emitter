@@ -10,6 +10,8 @@ import { useHover } from "@/app/Context/hoverContext"
 import { useSelection } from "@/app/Context/selectionContext"
 import { useColorPicker } from "@/app/Context/ColorPickerContext"
 import { ChromePicker } from "react-color"
+import lz from "lzutf8";
+
 const EditorPannel = () => {
 
 
@@ -36,7 +38,11 @@ const EditorPannel = () => {
 
 
     
-
+    const handleSaveState = () => {
+      const jsonState = query.serialize();
+      const compressedState = lz.encodeBase64(lz.compress(jsonState))
+      console.log("Serialized Editor State:", compressedState);
+    };
     
 
     const handleViewMode = (view:string) => {
@@ -55,9 +61,15 @@ const EditorPannel = () => {
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex flex-row items-center py-2  border-b border-zinc-300 justify-between ">
-                <span className="ml-[1rem] ">
+                <span className="ml-[1rem] flex gap-x-2 ">
+                <Button 
+                className="gap-1 bg-purple-400 hover:bg-purple-500 hover:text-white text-white " 
+                variant={"outline"}
+                onClick={handleSaveState}>
+                        Save
+                    </Button>
                     <Button className="gap-1 bg-slate-100  border-slate-300" variant={"outline"}>
-                        <text>Main page</text>
+                        Main page
                         <ChevronDown size={18} />
                     </Button>
                 </span>
@@ -87,7 +99,7 @@ const EditorPannel = () => {
       >
         <Frame>
           <Element is="div" canvas>
-            <p>deb</p>
+            
           </Element>
         </Frame>
       </div>

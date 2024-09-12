@@ -42,7 +42,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({setPage}) => {
         setLoading(true)
         signIn("password", {name,email,password,flow:"signUp" })
         .catch(() => {
-            setError("Password must contain caps,small,number,special character");
+            setError("Something went wrong");
         })
         .finally(() => {
             setLoading(false)
@@ -52,7 +52,7 @@ const SignUpModal: React.FC<SignUpModalProps> = ({setPage}) => {
     
 
     return (
-        <Card className="w-full h-full p-8 bg-purple-100">
+        <Card className="w-full h-full mt-[120px] mb-8 p-8 bg-purple-100">
             <CardHeader className="px-0 pt-0 font-medium">
                 Sign Up To Continue
                 <CardDescription className="pt-1">
