@@ -60,34 +60,33 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
     useEffect(() => {
       if (savedState) {
         try {
+          console.log("Saved state:", savedState);
+          
           const decompressedState = lz.decompress(lz.decodeBase64(savedState));
-          const parsedState = JSON.parse(decompressedState);
+          console.log("Decompressed state:", decompressedState);
+          
+          let parsedState;
+          try {
+            parsedState = JSON.parse(decompressedState);
+          } catch (parseError) {
+            console.error("Error parsing decompressed state:", parseError);
+            const partialData = decompressedState.substring(0, decompressedState.lastIndexOf('}') + 1);
+            parsedState = JSON.parse(partialData);
+          }
           console.log("Parsed state:", parsedState);
           
-          // Ensure that the ROOT node exists and has the correct structure
-          if (!parsedState.nodes.ROOT) {
-            parsedState.nodes.ROOT = {
-              type: {
-                resolvedName: 'Root'
-              },
-              isCanvas: true,
-              props: {},
-              displayName: 'Root',
-              custom: {},
-              hidden: false,
-              nodes: [],
-              linkedNodes: {}
-            };
-          }
           
+          
+          console.log("Final state before deserialization:", parsedState);
           actions.deserialize(parsedState);
+          console.log("Deserialization complete");
         } catch (error) {
-          console.error("Error deserializing state:", error);
-          // Handle the error (e.g., show an error message to the user)
+          console.error("Error in deserialization process:", error);
         }
+      } else {
+        console.log("No saved state found");
       }
     }, [savedState, actions]);
-
  
     const handleSaveState = useCallback(async () => {
       if (!buildID) {
@@ -97,6 +96,7 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
       try {
         const jsonState = query.serialize();
         const compressedState = lz.encodeBase64(lz.compress(jsonState));
+        console.log(compressedState)
       
         const result = await updateProject({
           projectId: buildID as Id<"projects">,
