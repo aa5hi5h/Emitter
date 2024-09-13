@@ -67,7 +67,6 @@ export const getProjects = query({
   .withIndex("by_user", (q) => q.gt("userId", baseUserId).lt("userId", baseUserId + "\uffff"))
   .collect();
 
-      console.log("LIST_OF_PROJECTS:",projects)
 
     return projects;
   },

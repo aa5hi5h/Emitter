@@ -16,7 +16,7 @@ import {
 import { Id } from "../../../convex/_generated/dataModel";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { 
   Dialog, 
   DialogContent, 
@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import lz from "lzutf8";
 import { useEditor } from "@craftjs/core";
+import { ProjectContext } from "../Context/LoadState";
 
 
 
@@ -65,10 +66,17 @@ const Dashboard = () => {
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [newProjectTitle, setNewProjectTitle] = useState("");
 
+  const { isProjectOpening, setIsProjectOpening } = useContext(ProjectContext);
+
 
   const handleProjectClick = (projectId: Id<"projects">) => {
+    setIsProjectOpening(true)
     router.push(`/build/${projectId}`);
   };
+
+  useEffect(() => {
+    console.log("PROJECT_OPENING", isProjectOpening);
+}, [isProjectOpening]);
 
   const handleDropdownClick = (e: React.MouseEvent) => {
     e.stopPropagation();

@@ -4,7 +4,7 @@ import ViewOptions from "./ViewOptions"
 import { ChevronDown, Redo, Undo } from "lucide-react"
 import {Frame, Element, useEditor} from "@craftjs/core"
 import UndoOptions from "./UndoOptions"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useHover } from "@/app/Context/hoverContext"
 import { useSelection } from "@/app/Context/selectionContext"
 import { useColorPicker } from "@/app/Context/ColorPickerContext"
@@ -15,6 +15,7 @@ import { Text } from "../Components/Props/Text"
 import { api } from "../../../../convex/_generated/api"
 import { Id } from "../../../../convex/_generated/dataModel";
 import { useMutation } from "convex/react"
+import { ProjectContext } from "@/app/Context/LoadState"
 
 interface EditorPannelProp{
   buildID: Id<"projects">
@@ -38,6 +39,8 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
     const { selectedElement, setSelectedElement } = useSelection();
     const { pickerVisible, ColorBorder, setPickerVisible, setColorBorder } = useColorPicker();
 
+    const { isProjectOpening, setIsProjectOpening } = useContext(ProjectContext);
+
     const {actions,query} = useEditor()
 
 
@@ -57,36 +60,37 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
           }
     }
 
+
     useEffect(() => {
-      if (savedState) {
-        try {
-          console.log("Saved state:", savedState);
-          
-          const decompressedState = lz.decompress(lz.decodeBase64(savedState));
-          console.log("Decompressed state:", decompressedState);
-          
-          let parsedState;
+      if (isProjectOpening && savedState) {
           try {
-            parsedState = JSON.parse(decompressedState);
-          } catch (parseError) {
-            console.error("Error parsing decompressed state:", parseError);
-            const partialData = decompressedState.substring(0, decompressedState.lastIndexOf('}') + 1);
-            parsedState = JSON.parse(partialData);
+              console.log("Saved state:", savedState);
+              const decompressedState = lz.decompress(lz.decodeBase64(savedState));
+              console.log("Decompressed state:", decompressedState);
+              
+              let parsedState;
+              try {
+                  parsedState = JSON.parse(decompressedState);
+              } catch (parseError) {
+                  console.error("Error parsing decompressed state:", parseError);
+                  const partialData = decompressedState.substring(0, decompressedState.lastIndexOf('}') + 1);
+                  parsedState = JSON.parse(partialData);
+              }
+              console.log("Parsed state:", parsedState);
+              
+              console.log("Final state before deserialization:", parsedState);
+              actions.deserialize(parsedState);
+              console.log("Deserialization complete");
+              setIsProjectOpening(false);
+
+          } catch (error) {
+              console.error("Error in deserialization process:", error);
           }
-          console.log("Parsed state:", parsedState);
-          
-          
-          
-          console.log("Final state before deserialization:", parsedState);
-          actions.deserialize(parsedState);
-          console.log("Deserialization complete");
-        } catch (error) {
-          console.error("Error in deserialization process:", error);
-        }
-      } else {
-        console.log("No saved state found");
       }
-    }, [savedState, actions]);
+  }, [isProjectOpening, savedState, actions, setIsProjectOpening]);
+
+
+
  
     const handleSaveState = useCallback(async () => {
       if (!buildID) {
