@@ -38,6 +38,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import lz from "lzutf8";
+import { useEditor } from "@craftjs/core";
 
 
 
@@ -63,7 +65,8 @@ const Dashboard = () => {
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [newProjectTitle, setNewProjectTitle] = useState("");
 
-  const handleProjectClick = (projectId: string) => {
+
+  const handleProjectClick = (projectId: Id<"projects">) => {
     router.push(`/build/${projectId}`);
   };
 

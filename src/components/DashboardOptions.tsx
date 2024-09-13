@@ -15,7 +15,7 @@ import { Button } from "./ui/button"
 import {useConvexAuth, useMutation} from "convex/react"
 import {api} from "../../convex/_generated/api"
 import { useRouter } from "next/navigation"
-
+import lz from "lzutf8"
 const DashboardOptions = () => {
 
   const createProject = useMutation(api.project.createProject);
@@ -40,30 +40,34 @@ const DashboardOptions = () => {
       }
       setIsLoading(true);
       try {
-          const initialState = {
-              nodes: {
-                  ROOT: {
-                      type: {
-                          resolvedName: 'Root'
-                      },
-                      isCanvas: true,
-                      props: {},
-                      displayName: 'Root',
-                      custom: {},
-                      hidden: false,
-                      nodes: [],
-                      linkedNodes: {}
-                  }
+        const initialState = {
+          nodes: {
+            ROOT: {
+              type: {
+                resolvedName: 'Root'
               },
-              root: {
-                  type: 'ROOT',
-                  isCanvas: true
-              }
-          };
+              isCanvas: true,
+              props: {},
+              displayName: 'Root',
+              custom: {},
+              hidden: false,
+              nodes: [],
+              linkedNodes: {}
+            }
+          },
+          root: {
+            type: 'ROOT',
+            isCanvas: true
+          }
+        };
+    
+
+          const stateString = JSON.stringify(initialState);
+          const compressedState = lz.encodeBase64(lz.compress(stateString));
 
           const projectId = await createProject({ 
-              title: projectName, 
-              savedState: JSON.stringify(initialState)
+              title: projectName,
+              savedState: compressedState
           });
           router.push(`/build/${projectId}`);
       } catch (error) {

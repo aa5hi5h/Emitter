@@ -18,7 +18,7 @@ import {
 import { useState } from "react"
 import {api} from "../../convex/_generated/api"
 import { useRouter } from "next/navigation"
-
+import lz from "lzutf8"
 const Navbar = () => {
 
   const createProject = useMutation(api.project.createProject);
@@ -35,35 +35,46 @@ const Navbar = () => {
 
     const DashboardSite = pathname.includes("dashboard")
     const BuildingSite = pathname.includes("build")
+    const IsHomePage = pathname === "/"
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
+      if(!isAuthenticated){
+        console.log("user is not authenticated")
+        return
+      }
       setIsCreationLoading(true);
       try {
-          const initialState = {
-              nodes: {
-                  ROOT: {
-                      type: {
-                          resolvedName: 'Root'
-                      },
-                      isCanvas: true,
-                      props: {},
-                      displayName: 'Root',
-                      custom: {},
-                      hidden: false,
-                      nodes: [],
-                      linkedNodes: {}
-                  }
+        const initialState = {
+          nodes: {
+            ROOT: {
+              type: {
+                resolvedName: 'Root'
               },
-              root: {
-                  type: 'ROOT',
-                  isCanvas: true
-              }
-          };
+              isCanvas: true,
+              props: {},
+              displayName: 'Root',
+              custom: {},
+              hidden: false,
+              nodes: [],
+              linkedNodes: {}
+            }
+          },
+          root: {
+            type: 'ROOT',
+            isCanvas: true
+          }
+        };
+    
+
+          const stateString = JSON.stringify(initialState);
+      const compressedState = lz.encodeBase64(lz.compress(stateString));
+
+          console.log(compressedState)
 
           const projectId = await createProject({ 
-              title: projectName, 
-              savedState: JSON.stringify(initialState)
+              title: projectName,
+              savedState: compressedState
           });
           router.push(`/build/${projectId}`);
       } catch (error) {
@@ -85,7 +96,7 @@ const Navbar = () => {
         {!isAuthenticated ? (
           <>
             <Link href={"/sign-in"}>
-              <Button className="">Sign In</Button>
+              <Button className="bg-[#c74db9] hover:bg-[#c74db9]/80">Sign In</Button>
             </Link>
             <Link className="hidden md:flex" href={"/sign-up"}>
               <Button
@@ -139,6 +150,13 @@ const Navbar = () => {
             </Button>
               </div>
             )}
+            {
+              IsHomePage &&  (
+                <div>
+                  <Button className="bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">Dashboard</Button>
+                </div>
+              )
+            }
 
             <UserButton />
           </>

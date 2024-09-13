@@ -7,7 +7,7 @@ const schema = defineSchema({
     projects: defineTable({
         title: v.string(),
         userId:  v.string(),
-        savedState: v.optional(v.any()),
+        savedState: v.optional(v.string()),
         createdAt: v.number(),
         updatedAt: v.number()
     }).index("by_user",["userId"])

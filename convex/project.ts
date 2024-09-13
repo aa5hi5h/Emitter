@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { auth } from "./auth";
 
 export const createProject = mutation({
-  args: { title: v.string(), savedState: v.string() },
+  args: { title: v.string(), savedState: v.optional(v.string()) },
   handler: async (ctx, args) => {
     const user = await ctx.auth.getUserIdentity()
     if (!user) {
@@ -116,5 +116,16 @@ export const deleteProject = mutation({
     await ctx.db.delete(args.projectId);
 
     return args.projectId;
+  },
+});
+
+export const getProject = query({
+  args: { projectId: v.id("projects") },
+  handler: async (ctx, args) => {
+    const project = await ctx.db.get(args.projectId);
+    if (!project) {
+      throw new Error("Project not found");
+    }
+    return project;
   },
 });

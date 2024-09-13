@@ -3,16 +3,34 @@ import { Button } from "@/components/ui/button"
 import ViewOptions from "./ViewOptions"
 import { ChevronDown, Redo, Undo } from "lucide-react"
 import {Frame, Element, useEditor} from "@craftjs/core"
-import { Container } from "../Components/Props/Container"
 import UndoOptions from "./UndoOptions"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useHover } from "@/app/Context/hoverContext"
 import { useSelection } from "@/app/Context/selectionContext"
 import { useColorPicker } from "@/app/Context/ColorPickerContext"
 import { ChromePicker } from "react-color"
 import lz from "lzutf8";
+import { Container } from "../Components/Props/Container"
+import { Text } from "../Components/Props/Text"
+import { api } from "../../../../convex/_generated/api"
+import { Id } from "../../../../convex/_generated/dataModel";
+import { useMutation } from "convex/react"
 
-const EditorPannel = () => {
+interface EditorPannelProp{
+  buildID: Id<"projects">
+  savedState?: string
+  project: {
+    _id: Id<"projects">
+    _creationTime: number
+    title: string
+    userId: string
+    savedState?: any
+    createdAt: number
+    updatedAt: number
+  }
+}
+
+const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
 
 
     const [viewMode,setViewMode] = useState<string>("monitor")
@@ -21,6 +39,9 @@ const EditorPannel = () => {
     const { pickerVisible, ColorBorder, setPickerVisible, setColorBorder } = useColorPicker();
 
     const {actions,query} = useEditor()
+
+
+    const updateProject = useMutation(api.project.updateProject);
     
 
     const viewScreen = () => {
@@ -36,14 +57,59 @@ const EditorPannel = () => {
           }
     }
 
+    useEffect(() => {
+      if (savedState) {
+        try {
+          const decompressedState = lz.decompress(lz.decodeBase64(savedState));
+          const parsedState = JSON.parse(decompressedState);
+          console.log("Parsed state:", parsedState);
+          
+          // Ensure that the ROOT node exists and has the correct structure
+          if (!parsedState.nodes.ROOT) {
+            parsedState.nodes.ROOT = {
+              type: {
+                resolvedName: 'Root'
+              },
+              isCanvas: true,
+              props: {},
+              displayName: 'Root',
+              custom: {},
+              hidden: false,
+              nodes: [],
+              linkedNodes: {}
+            };
+          }
+          
+          actions.deserialize(parsedState);
+        } catch (error) {
+          console.error("Error deserializing state:", error);
+          // Handle the error (e.g., show an error message to the user)
+        }
+      }
+    }, [savedState, actions]);
 
-    
-    const handleSaveState = () => {
-      const jsonState = query.serialize();
-      const compressedState = lz.encodeBase64(lz.compress(jsonState))
-      console.log("Serialized Editor State:", compressedState);
-    };
-    
+ 
+    const handleSaveState = useCallback(async () => {
+      if (!buildID) {
+        console.error("No buildId found");
+        return;
+      }
+      try {
+        const jsonState = query.serialize();
+        const compressedState = lz.encodeBase64(lz.compress(jsonState));
+      
+        const result = await updateProject({
+          projectId: buildID as Id<"projects">,
+          title: project.title, 
+          savedState: compressedState
+        });
+  
+        console.log("State saved successfully", result);
+
+      } catch (error) {
+        console.error("Error saving state:", error);
+      }
+    }, [query, updateProject, buildID]);
 
     const handleViewMode = (view:string) => {
         console.log(`View changed to: ${view}`);
@@ -58,6 +124,8 @@ const EditorPannel = () => {
      const handleColorChange = (color: any) => {
     setColorBorder(color.hex);
   };
+
+  
     return (
         <div className="flex flex-col h-full w-full">
             <div className="flex flex-row items-center py-2  border-b border-zinc-300 justify-between ">
@@ -65,7 +133,8 @@ const EditorPannel = () => {
                 <Button 
                 className="gap-1 bg-purple-400 hover:bg-purple-500 hover:text-white text-white " 
                 variant={"outline"}
-                onClick={handleSaveState}>
+                onClick={handleSaveState}
+                >
                         Save
                     </Button>
                     <Button className="gap-1 bg-slate-100  border-slate-300" variant={"outline"}>
@@ -98,13 +167,12 @@ const EditorPannel = () => {
         onClick={handleClick}
       >
         <Frame>
-          <Element is="div" canvas>
-            
+        <Element is={Container} canvas>
+          <p>Drag and drop here</p>
           </Element>
         </Frame>
       </div>
         </div>
     )
 }
-
 export default EditorPannel
