@@ -15,13 +15,13 @@ const UndoOptions = () => {
         <TooltipProvider>
         <Tooltip>
             <TooltipTrigger asChild>
-    <Undo  onClick={() => actions.history.undo()} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-100 opacity-60 hover:opacity-100`} />
+    <Undo  onClick={() => actions.history.undo()} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
     </TooltipTrigger>
     <TooltipContent>Undo</TooltipContent>
     </Tooltip>
     <Tooltip>
         <TooltipTrigger asChild>
-            <Redo  onClick={() => actions.history.redo()} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-100 opacity-60 hover:opacity-100`} />
+            <Redo  onClick={() => actions.history.redo()} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
         </TooltipTrigger>
         <TooltipContent>Redo</TooltipContent>
     </Tooltip>

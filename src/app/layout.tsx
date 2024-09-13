@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import { ConvexClientProvider } from "./ConvexClientProvider";
+import { CanvasProvider } from "./Context/CanvasContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <ConvexAuthNextjsServerProvider>
+      <CanvasProvider>
     <html lang="en">
       <body className={inter.className}>
         <ConvexClientProvider>
@@ -32,6 +34,7 @@ export default function RootLayout({
         </ConvexClientProvider>
         </body>
     </html>
+    </CanvasProvider>
     </ConvexAuthNextjsServerProvider>
   );
 }

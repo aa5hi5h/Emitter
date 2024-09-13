@@ -2,7 +2,7 @@
 import { DraftingCompass, Layers } from "lucide-react"
 import { useState } from "react"
 import ComponentsProps from "./Props/index"
-import LayersProp from "./LayersProp"
+import LayersPannel from "../Feature/Layers/page"
 
 const ComponentsPannel = () => {
 
@@ -22,7 +22,7 @@ const ComponentsPannel = () => {
             </div>
         </div>
         <div className="h-full p-2 bg-slate-100">
-            { selected === "components" ? <ComponentsProps /> : <LayersProp />}
+            { selected === "components" ? <ComponentsProps /> : <LayersPannel />}
         </div>
     </div>
     )

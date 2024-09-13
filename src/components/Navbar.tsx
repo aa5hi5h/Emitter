@@ -153,7 +153,7 @@ const Navbar = () => {
             {
               IsHomePage &&  (
                 <div>
-                  <Button className="bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">Dashboard</Button>
+                  <Button onClick={() => router.push("/dashboard")} className="bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">Dashboard</Button>
                 </div>
               )
             }

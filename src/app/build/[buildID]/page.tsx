@@ -3,7 +3,7 @@
 import ComponentsPannel from "@/components/Pannel/Components";
 import EditorPannel from "@/components/Pannel/Editor";
 import PropertisePannel from "@/components/Pannel/Propertise";
-import { Editor } from "@craftjs/core";
+import { Editor, Resolver } from "@craftjs/core";
 import { Text } from "../../../components/Pannel/Components/Props/Text";
 import { Container } from "@/components/Pannel/Components/Props/Container";
 import { CustomButton } from "@/components/Pannel/Components/Props/Button";
@@ -17,6 +17,8 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
 import React from "react";
+import { EmptyCanvas } from "@/components/Pannel/Components/Props/EmptyCanvas";
+import { CanvasProvider, useCanvas } from '../../Context/CanvasContext';
 
 
 interface BuildProjectProps{
@@ -25,23 +27,14 @@ interface BuildProjectProps{
   }
 }
 
-const FallbackComponent: React.FC = () => <div>Undefined Component</div>;
-
-interface RootProps {
-  children?: React.ReactNode;
-}
-
-const Root: React.FC<RootProps> = ({ children }) => <div>{children}</div>;
-
-const resolver = {
+export const resolver: Resolver = {
   Text,
   Container,
   CustomButton,
   CustomImage,
   CustomBanner,
   CustomDiv,
-  Root,
-  undefined: FallbackComponent
+  EmptyCanvas,
 };
 
 const Build = ({params}: BuildProjectProps) =>  {
@@ -51,6 +44,7 @@ const Build = ({params}: BuildProjectProps) =>  {
 
 
   const project = useQuery(api.project.getProject, { projectId:buildID });
+  const { checkIfCanvasEmpty } = useCanvas();
 
   if(!project){
     return null
@@ -59,7 +53,7 @@ const Build = ({params}: BuildProjectProps) =>  {
     <SelectionProvider>
       <HoverProvider>
         <ColorPickerProvider>
-        <Editor resolver={resolver}>
+        <Editor resolver={resolver} onNodesChange={checkIfCanvasEmpty}>
           <div className="grid grid-cols-6 h-[90vh] ">
             <div className="col-span-1 border-r border-slate-300 h-full">
               <ComponentsPannel />

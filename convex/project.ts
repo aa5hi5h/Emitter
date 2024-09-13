@@ -22,9 +22,12 @@ export const createProject = mutation({
       throw new Error("Invalid user ID");
     }
 
+    console.log("USER_ID",userId)
+
+    const baseUserId = userId.split('|')[0];
     const existingProjects = await ctx.db
       .query("projects")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .withIndex("by_user", (q) => q.gt("userId", baseUserId).lt("userId", baseUserId + "\uffff"))
       .collect();
 
     if (existingProjects.length >= 5) {
@@ -56,10 +59,15 @@ export const getProjects = query({
       throw new Error("Invalid user ID");
     }
 
-    const projects = await ctx.db
-      .query("projects")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
-      .collect();
+    console.log("USER_ID_FETCH",userId)
+
+    const baseUserId = userId.split('|')[0];
+  const projects = await ctx.db
+  .query("projects")
+  .withIndex("by_user", (q) => q.gt("userId", baseUserId).lt("userId", baseUserId + "\uffff"))
+  .collect();
+
+      console.log("LIST_OF_PROJECTS:",projects)
 
     return projects;
   },
@@ -79,8 +87,10 @@ export const updateProject = mutation({
       throw new Error("Invalid user ID");
     }
 
+    const baseUserId = userId.split('|')[0];
     const project = await ctx.db.get(args.projectId);
-    if (!project || project.userId !== userId) {
+
+     if (!project || !project.userId.startsWith(baseUserId)) {
       throw new Error("Project not found or access denied");
     }
 
@@ -108,8 +118,10 @@ export const deleteProject = mutation({
       throw new Error("Invalid user ID");
     }
 
+    const baseUserId = userId.split('|')[0];
     const project = await ctx.db.get(args.projectId);
-    if (!project || project.userId !== userId) {
+
+     if (!project || !project.userId.startsWith(baseUserId)) {
       throw new Error("Project not found or access denied");
     }
 

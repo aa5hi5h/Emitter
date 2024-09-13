@@ -21,7 +21,7 @@ export default function Home() {
                                     <p className="text-foreground hidden md:flex text-sm text-center md:text-base font-medium pl-4 pr-4 lg:pr-0">
                                         ✨ {"  "} Start building your dream website now!
                                     </p>
-                                    <Button size="sm" className="rounded-full cursor-pointer bg-[#5C3B58] hover:bg-[#5C3B58]/80 flex border border-foreground/20">
+                                    <Button size="sm" className="rounded-full cursor-pointer bg-[#c74db9] hover:bg-[#c74db9]/80 flex border border-foreground/20">
                                         Try Demo
                                         <ArrowRight className="w-4 h-4 ml-1" />
                                     </Button>

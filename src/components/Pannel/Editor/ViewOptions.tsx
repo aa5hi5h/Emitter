@@ -24,19 +24,19 @@ const ViewOptions : React.FC<ViewOptionsProp> = ({ViewMode}) => {
         <TooltipProvider>
         <Tooltip>
             <TooltipTrigger asChild>
-    <Monitor onClick={() => handleClick("monitor")}  className={`w-6 h-6 p-1 rounded-md hover:bg-slate-100 opacity-60 hover:opacity-100`} />
+    <Monitor onClick={() => handleClick("monitor")}  className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
     </TooltipTrigger>
     <TooltipContent>Dekstop</TooltipContent>
     </Tooltip>
     <Tooltip>
         <TooltipTrigger asChild>
-            <Tablet onClick={() => handleClick("tablet")} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-100 opacity-60 hover:opacity-100`} />
+            <Tablet onClick={() => handleClick("tablet")} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
         </TooltipTrigger>
         <TooltipContent>Tablet</TooltipContent>
     </Tooltip>
     <Tooltip>
         <TooltipTrigger>
-    <Smartphone onClick={() => handleClick("mobile")} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-100 opacity-60 hover:opacity-100 `} />
+    <Smartphone onClick={() => handleClick("mobile")} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100 `} />
     </TooltipTrigger>
     <TooltipContent>Mobile</TooltipContent>
     </Tooltip>
@@ -44,7 +44,7 @@ const ViewOptions : React.FC<ViewOptionsProp> = ({ViewMode}) => {
     <hr className="border border-slate-400 h-6" />
     <Tooltip>
         <TooltipTrigger>
-    <Maximize onClick={() => handleClick("maximize")}  className={`w-6 h-6 p-1 rounded-md hover:bg-slate-100 opacity-60 hover:opacity-100`} />
+    <Maximize onClick={() => handleClick("maximize")}  className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
     </TooltipTrigger>
     <TooltipContent>Full Screen</TooltipContent>
     </Tooltip>

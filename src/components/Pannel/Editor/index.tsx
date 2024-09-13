@@ -131,7 +131,7 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
             <div className="flex flex-row items-center py-2  border-b border-zinc-300 justify-between ">
                 <span className="ml-[1rem] flex gap-x-2 ">
                 <Button 
-                className="gap-1 bg-purple-400 hover:bg-purple-500 hover:text-white text-white " 
+                className="gap-1 bg-[#c74db9] hover:bg-[#c74db9]/80 hover:text-white text-white " 
                 variant={"outline"}
                 onClick={handleSaveState}
                 >
