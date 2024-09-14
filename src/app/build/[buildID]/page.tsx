@@ -55,7 +55,7 @@ const Build = ({params}: BuildProjectProps) =>  {
         <ColorPickerProvider>
         <Editor resolver={resolver} onNodesChange={checkIfCanvasEmpty}>
           <div className="grid grid-cols-6 h-[90vh] ">
-            <div className="col-span-1 border-r border-slate-300 h-full">
+            <div className="col-span-1 border-r border-slate-300  h-full overflow-hidden">
               <ComponentsPannel />
             </div>
             <div className="col-span-4 relative border-r border-slate-300 h-full">

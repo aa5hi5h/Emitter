@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEditor, Node } from '@craftjs/core';
-import { ChevronRight, ChevronDown } from 'lucide-react';
+import { ChevronRight, ChevronDown, Trash } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface LayerItemProps {
   nodeId: string;
@@ -12,31 +13,43 @@ const LayerItem: React.FC<LayerItemProps> = ({ nodeId, depth = 0 }) => {
     node: state.nodes[nodeId] as Node,
   }));
 
-  const [isExpanded, setIsExpanded] = React.useState(true);
-
   const hasChildren = node.data.nodes && node.data.nodes.length > 0;
 
-  const handleSelect = () => {
+  const handleSelect = (e: React.MouseEvent) => {
+    e.stopPropagation();
     actions.selectNode(nodeId);
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+      actions.delete(nodeId);
   };
 
   return (
     <div>
-      <div 
-        style={{ 
+      <div
+        style={{
           paddingLeft: `${depth * 20}px`,
           display: 'flex',
           alignItems: 'center',
           cursor: 'pointer',
-          backgroundColor: node.events.selected ? '#e0e0e0' : 'transparent',
         }}
+        className={`rounded-md p-2 flex justify-between ${node.events.selected ? "bg-[#c74db9]/60 hover:hover:bg-[#c74db9]/60" : "hover:bg-[#c74db9]/15"} `}
         onClick={handleSelect}
       >
-        <span>{node.data.displayName || node.data.name}</span>
+        <span className={`text-sm font-medium ${node.events.selected ? "text-white " : "text-slate-800"}`}>{node.data.displayName || node.data.name}</span>
+        <span onClick={handleDelete} >
+        <Trash 
+            size={14} 
+            className={`transition-transform  duration-300 
+                        transform hover:scale-125 hover:rotate-3 active:scale-90 
+                        hover:text-red-500 ${node.events.selected ? "text-white" : "text-slate-600/70"}`} 
+        />
+        </span>
       </div>
       {hasChildren && (
         <div>
-          {node.data.nodes.map((childNodeId) => (
+          {node.data.nodes.map((childNodeId: string) => (
             <LayerItem key={childNodeId} nodeId={childNodeId} depth={depth + 1} />
           ))}
         </div>
@@ -46,35 +59,23 @@ const LayerItem: React.FC<LayerItemProps> = ({ nodeId, depth = 0 }) => {
 };
 
 const LayersPanel: React.FC = () => {
-  const { nodes, selected } = useEditor((state) => ({
+  const { nodes } = useEditor((state) => ({
     nodes: state.nodes,
-    selected: state.events.selected,
   }));
-
-  
-  const renderLayerItems = (nodeIds: string | Set<string>) => {
-    if (typeof nodeIds === 'string') {
-      return <LayerItem nodeId={nodeIds} />;
-    } else if (nodeIds instanceof Set) {
-      return Array.from(nodeIds).map((id) => <LayerItem key={id} nodeId={id} />);
-    }
-    return null;
-  };
-
 
   const findRootNode = (): string | undefined => {
     return Object.keys(nodes).find(id => !nodes[id].data.parent);
   };
 
-  const rootNodeId = selected && selected.size > 0 ? selected : findRootNode();
+  const rootNodeId = findRootNode();
 
   return (
-    <div className="p-4">
-      <h3 className="text-lg font-semibold mb-2">Layers</h3>
-      <div className="border rounded">
-        {rootNodeId && renderLayerItems(rootNodeId)}
+    <ScrollArea className="h-full w-full  overflow-y-auto">
+        <div className="max-h-[calc(100vh-96px)]">
+            
+        {rootNodeId && <LayerItem nodeId={rootNodeId} />}
       </div>
-    </div>
+    </ScrollArea>
   );
 };
 
