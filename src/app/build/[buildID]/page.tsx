@@ -25,6 +25,11 @@ import { CustomCard } from "@/components/Pannel/Components/Props/Card";
 import { CustomNavbar } from "@/components/Pannel/Components/Props/Navbar";
 import { CustomVideo } from "@/components/Pannel/Components/Props/Video";
 import { CustomCarousel } from "@/components/Pannel/Components/Props/Carousel";
+import { TestimonialCarousel } from "@/components/Pannel/Components/Props/Testimonial";
+import { AccordionFAQ } from "@/components/Pannel/Components/Props/Faq";
+import AnimatedGradientBackground from "@/components/Pannel/Components/Props/Gradient";
+import { PricingSection } from "@/components/Pannel/Components/Props/Pricing";
+import { MultiStepForm } from "@/components/Pannel/Components/Props/Form";
 
 
 interface BuildProjectProps{
@@ -47,6 +52,11 @@ export const resolver: Resolver = {
   CustomVideo,
   CustomCarousel,
   EmptyCanvas,
+  AccordionFAQ,
+  PricingSection,
+  AnimatedGradientBackground,
+  TestimonialCarousel,
+  MultiStepForm
 };
 
 const Build = ({params}: BuildProjectProps) =>  {
