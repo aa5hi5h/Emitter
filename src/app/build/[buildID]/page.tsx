@@ -19,6 +19,12 @@ import { Id } from "../../../../convex/_generated/dataModel";
 import React from "react";
 import { EmptyCanvas } from "@/components/Pannel/Components/Props/EmptyCanvas";
 import { CanvasProvider, useCanvas } from '../../Context/CanvasContext';
+import { CustomInput } from "@/components/Pannel/Components/Props/Input";
+import { CustomList } from "@/components/Pannel/Components/Props/List";
+import { CustomCard } from "@/components/Pannel/Components/Props/Card";
+import { CustomNavbar } from "@/components/Pannel/Components/Props/Navbar";
+import { CustomVideo } from "@/components/Pannel/Components/Props/Video";
+import { CustomCarousel } from "@/components/Pannel/Components/Props/Carousel";
 
 
 interface BuildProjectProps{
@@ -33,7 +39,13 @@ export const resolver: Resolver = {
   CustomButton,
   CustomImage,
   CustomBanner,
+  CustomInput,
   CustomDiv,
+  CustomList,
+  CustomCard,
+  CustomNavbar,
+  CustomVideo,
+  CustomCarousel,
   EmptyCanvas,
 };
 

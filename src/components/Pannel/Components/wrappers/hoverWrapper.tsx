@@ -33,7 +33,7 @@ const HoverableWrapper = ({ children, type, id }: HoverableWrapperProps) => {
     };
   }, [id, setSelectedElement]);
 
-  console.log(`selected element is ${JSON.stringify(selectedElement, null, 2)}`);
+
 
 
   return (

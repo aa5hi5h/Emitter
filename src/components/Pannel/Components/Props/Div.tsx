@@ -8,12 +8,12 @@ import { useSelection } from "@/app/Context/selectionContext";
 interface CustomDivProps {
   backgroundColor?: string;
   children?: React.ReactNode;
-  opacity: number;
-  margin: number;
-  padding: number;
-  borderRadius: number;
-  border: number;
-  borderColor: string;
+  opacity?: number;
+  margin?: number;
+  padding?: number;
+  borderRadius?: number;
+  border?: number;
+  borderColor?: string;
 }
 
 interface CraftComponent extends React.FC<CustomDivProps> {

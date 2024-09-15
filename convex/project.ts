@@ -1,6 +1,8 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { mutation,  internalMutation, query } from "./_generated/server";
 import { auth } from "./auth";
+import { cronJobs } from "convex/server";
+import { internal } from "./_generated/api";
 
 export const createProject = mutation({
   args: { title: v.string(), savedState: v.optional(v.string()) },
@@ -138,5 +140,33 @@ export const getProject = query({
       throw new Error("Project not found");
     }
     return project;
+  },
+});
+
+export const createProjectWithTemplate = mutation({
+  args: { title: v.string(), savedState: v.optional(v.string()) },
+  handler: async (ctx, args) => {
+    const projectId = await ctx.db.insert("projects", {
+      title: args.title,
+      userId: "anonymous",
+      savedState: args.savedState,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+
+    
+    await ctx.scheduler.runAfter(30 * 60 * 1000, internal.project.deleteExpiredProject, { projectId });
+
+    return projectId;
+  },
+});
+
+export const deleteExpiredProject = internalMutation({
+  args: { projectId: v.id("projects") },
+  handler: async (ctx, args) => {
+    const project = await ctx.db.get(args.projectId);
+    if (project && project.userId === "anonymous") {
+      await ctx.db.delete(args.projectId);
+    }
   },
 });

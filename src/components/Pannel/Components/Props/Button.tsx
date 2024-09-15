@@ -10,23 +10,24 @@ import { Chilanka } from "next/font/google";
 
 interface ButtonProps {
   children: string;
-  opacity: number;
-  margin: number;
-  padding: number;
-  borderRadius: number;
-  border: number;
-  borderColor: string;
-  width: number;
-  height: number;
-  maxWidth: number;
-  minWidth: number;
-  textAlign: string;
-  fontFamily: string;
-  fontSize: number;
-  fontWeight: string;
-  color: string;
-  letterSpacing: string;
-  lineHeight: string;
+  opacity?: number;
+  margin?: number;
+  padding?: number;
+  borderRadius?: number;
+  border?: number;
+  borderColor?: string;
+  width?: number;
+  height?: number;
+  maxWidth?: number;
+  minWidth?: number;
+  textAlign?: string;
+  fontFamily?: string;
+  fontSize?: number;
+  fontWeight?: string;
+  color?: string;
+  letterSpacing?: string;
+  lineHeight?: string;
+  link?: string | null
 }
 interface CraftComponent extends React.FC<ButtonProps> {
   craft: {
@@ -55,7 +56,8 @@ export const CustomButton: CraftComponent = ({
   fontWeight,
   color,
   letterSpacing,
-  lineHeight
+  lineHeight,
+  link
 }) => {
   const {
     connectors: { connect, drag },
@@ -79,7 +81,8 @@ export const CustomButton: CraftComponent = ({
     fontWeight: node.data.props.fontWeight,
     color: node.data.props.color,
     letterSpacing: node.data.props.letterSpacing,
-    lineHeight: node.data.props.lineHeight
+    lineHeight: node.data.props.lineHeight,
+    link: node.data.props.link
   }));
 
   const [editable, setEditable] = useState(false);
@@ -131,7 +134,7 @@ export const CustomButton: CraftComponent = ({
 };
 
 
-const ButtonSettings: React.FC = () => {
+export const ButtonSettings: React.FC = () => {
   const { 
     actions: { setProp },
     children,
@@ -152,6 +155,7 @@ const ButtonSettings: React.FC = () => {
     color,
     letterSpacing,
     lineHeight,
+    link
   } = useNode((node) => ({
     children: node.data.props.children,
     opacity: node.data.props.opacity,
@@ -171,6 +175,7 @@ const ButtonSettings: React.FC = () => {
     color: node.data.props.color,
     letterSpacing: node.data.props.letterSpacing,
     lineHeight: node.data.props.lineHeight,
+    link: node.data.props.link
   }));
 
 
@@ -181,8 +186,15 @@ const ButtonSettings: React.FC = () => {
   return (
     <div className="flex flex-col space-y-4">
       <div>
-      <div className="border-b border-zinc-300 px-2 py-3">
+      <div className="border-b flex flex-col border-zinc-300 px-2 py-3">
         <label className="text-sm text-zinc-900 font-semibold">Link</label>
+        <input
+            type="text"
+            value={ link ||  ''}
+            onChange={(e) => setProp((props: any) => (props.link = e.target.value))}
+            className="w-full border border-gray-300 rounded px-2 py-1"
+            placeholder="Enter page link"
+          />
       </div>
       <div className="flex flex-col space-y-4">
         <div className="border-b border-zinc-300 px-2 pt-2 ">
@@ -461,7 +473,8 @@ CustomButton.craft = {
     fontWeight: "700",
     color: '#000000',
     letterSpacing: '0px',
-    lineHeight: '1.5'
+    lineHeight: '1.5',
+    link: null
   },
   related: {
     settings: ButtonSettings

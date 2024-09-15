@@ -3,6 +3,7 @@ import { DraftingCompass, Layers } from "lucide-react"
 import { useState } from "react"
 import ComponentsProps from "./Props/index"
 import LayersPannel from "../Feature/Layers/page"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const ComponentsPannel = () => {
 
@@ -21,9 +22,11 @@ const ComponentsPannel = () => {
                     <h2 className={`font-medium text-slate-500 hover:text-slate-600 ${selected === "layers" ? "text-zinc-800 hover:text-zinc-800" : "" }`}>Layers</h2></span>
             </div>
         </div>
-        <div className="h-full p-2 bg-slate-100">
+        <ScrollArea className="h-full w-full   overflow-y-auto">
+        <div className="max-h-[calc(100vh-96px)] p-2  bg-slate-100">
             { selected === "components" ? <ComponentsProps /> : <LayersPannel />}
         </div>
+        </ScrollArea>
     </div>
     )
 }

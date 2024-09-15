@@ -10,7 +10,12 @@ const schema = defineSchema({
         savedState: v.optional(v.string()),
         createdAt: v.number(),
         updatedAt: v.number()
-    }).index("by_user",["userId"])
+    }).index("by_user",["userId"]),
+    templates: defineTable({
+        title: v.string(),
+        data: v.string(),
+        image: v.optional(v.string())
+    })
 });
 
 export default schema

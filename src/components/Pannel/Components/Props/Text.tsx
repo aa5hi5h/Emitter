@@ -11,48 +11,48 @@ import { useColorPicker } from "@/app/Context/ColorPickerContext";
 
 interface TextProp {
   text: string;
-  fontSize: number;
-  color: string;
-  fontFamily: string;
-  fontWeight: string;
-  letterSpacing: string;
-  lineHeight: string;
-  textAlign: CSSProperties['textAlign'];
-  opacity: number;
-  tag: keyof JSX.IntrinsicElements;
-  margin: number;
-  padding: number;
-  borderRadius: number;
-  border: number;
-  borderColor: string;
-  width: number;
-  height: number;
-  maxWidth: number;
-  minWidth: number;
+  fontSize?: number;
+  color?: string;
+  fontFamily?: string;
+  fontWeight?: string;
+  letterSpacing?: string;
+  lineHeight?: string;
+  textAlign?: CSSProperties['textAlign'];
+  opacity?: number;
+  tag?: keyof JSX.IntrinsicElements;
+  margin?: number;
+  padding?: number;
+  borderRadius?: number;
+  border?: number;
+  borderColor?: string;
+  width?:number,
+  height?: number,
+  maxWidth ?: number,
+  minWidth ?: number
 }
 
 interface CraftComponent extends React.FC<TextProp> {
   craft: {
     props: {
       text: string;
-      fontSize: number;
-      color: string;
-      fontFamily: string;
-      fontWeight: string;
-      letterSpacing: string;
-      lineHeight: string;
-      textAlign: CSSProperties['textAlign'];
-      opacity: number;
-      tag: keyof JSX.IntrinsicElements;
-      margin: number;
-      padding: number;
-      borderRadius: number;
-      border: number;
-      borderColor: string;
-      width:number,
-      height: number,
-      maxWidth : number,
-      minWidth : number
+      fontSize?: number;
+      color?: string;
+      fontFamily?: string;
+      fontWeight?: string;
+      letterSpacing?: string;
+      lineHeight?: string;
+      textAlign?: CSSProperties['textAlign'];
+      opacity?: number;
+      tag?: keyof JSX.IntrinsicElements;
+      margin?: number;
+      padding?: number;
+      borderRadius?: number;
+      border?: number;
+      borderColor?: string;
+      width?:number,
+      height?: number,
+      maxWidth ?: number,
+      minWidth ?: number
     };
     related: {
       settings: React.FC;
@@ -151,7 +151,7 @@ export const Text: CraftComponent = ({
   );
 };
 
-const TextSettings = () => {
+export const TextSettings = () => {
   const {
     actions: { setProp },
     text,
@@ -287,7 +287,6 @@ const TextSettings = () => {
                 <option value="Georgia">Georgia</option>
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Verdana">Verdana</option>
-                {/* Add more fonts as needed */}
               </select>
             </span>
             <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
@@ -330,16 +329,15 @@ const TextSettings = () => {
               className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
             />
           </span>
-  {/* Letter Spacing */}
   <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
   <label className="text-sm font-medium text-slate-600" htmlFor="letterSpacing">Spacing</label>
   <input
     id="letterSpacing"
     type="number"
-    value={parseFloat(letterSpacing) || 0}  // Ensure value is treated as a number
+    value={parseFloat(letterSpacing) || 0}
     onChange={(e) => {
       const newValue = e.target.value;
-      setProp((props: any) => (props.letterSpacing = `${newValue}px`));  // Apply px after setting the value
+      setProp((props: any) => (props.letterSpacing = `${newValue}px`));  
     }}
     className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
   />
@@ -438,7 +436,6 @@ const TextSettings = () => {
         />
       </span>
 
-      {/* Padding */}
       <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
         <label className="text-sm font-medium text-slate-600" htmlFor="padding">Padding</label>
         <input
@@ -453,7 +450,6 @@ const TextSettings = () => {
         />
       </span>
 
-      {/* Border Width */}
       <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
         <label className="text-sm font-medium text-slate-600" htmlFor="border">Border</label>
         <input
@@ -468,7 +464,6 @@ const TextSettings = () => {
         />
       </span>
 
-      {/* Border Radius */}
       <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
         <label className="text-sm font-medium text-slate-600" htmlFor="borderRadius">Border Radius</label>
         <input

@@ -16,7 +16,7 @@ import { api } from "../../../../convex/_generated/api"
 import { Id } from "../../../../convex/_generated/dataModel";
 import { useMutation } from "convex/react"
 import { ProjectContext } from "@/app/Context/LoadState"
-
+import MultiPageNavigation from "../Feature/PageNavigation/page"
 interface EditorPannelProp{
   buildID: Id<"projects">
   savedState?: string
@@ -31,12 +31,32 @@ interface EditorPannelProp{
   }
 }
 
+interface Pages {
+  [key: string]: any;
+}
+
 const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
 
 
     const [viewMode,setViewMode] = useState<string>("monitor")
     const { hoveredElement, setHoveredElement } = useHover();
     const { selectedElement, setSelectedElement } = useSelection();
+    const [currentPage, setCurrentPage] = useState('main');
+    const [pages, setPages] = useState<Pages>({
+      main: savedState ? JSON.parse(lz.decompress(lz.decodeBase64(savedState))) : null,
+  });
+
+    const changePage = (pageLink: string) => {
+      if (pageLink in pages) {
+        setCurrentPage(pageLink);
+        actions.deserialize(pages[pageLink]);
+      } else {
+        console.error(`Page ${pageLink} not found`);
+      }
+    };
+
+
+
     const { pickerVisible, ColorBorder, setPickerVisible, setColorBorder } = useColorPicker();
 
     const { isProjectOpening, setIsProjectOpening } = useContext(ProjectContext);
@@ -90,6 +110,34 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
   }, [isProjectOpening, savedState, actions, setIsProjectOpening]);
 
 
+  useEffect(() => {
+    if (savedState) {
+        try {
+            const decompressedState = lz.decompress(lz.decodeBase64(savedState));
+            
+            let parsedState;
+            try {
+                parsedState = JSON.parse(decompressedState);
+            } catch (parseError) {
+                console.error("Error parsing decompressed state:", parseError);
+                const partialData = decompressedState.substring(0, decompressedState.lastIndexOf('}') + 1);
+                parsedState = JSON.parse(partialData);
+            }
+            actions.deserialize(parsedState);
+            console.log("SAVED_STATE", parsedState)
+            console.log("Deserialization complete");
+
+        } catch (error) {
+            console.error("Error in deserialization process:", error);
+        }
+    }
+}, []);
+
+
+
+  
+
+
 
  
     const handleSaveState = useCallback(async () => {
@@ -141,10 +189,6 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
                 >
                         Save
                     </Button>
-                    <Button className="gap-1 bg-slate-100  border-slate-300" variant={"outline"}>
-                        Main page
-                        <ChevronDown size={18} />
-                    </Button>
                 </span>
                 <div className="flex">
                     <span className="bg-slate-200 border-slate-300 border flex gap-2 items-center max-w-max p-2 rounded-md ml-auto mr-[1rem]">
@@ -172,7 +216,7 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
       >
         <Frame>
         <Element is={Container} canvas>
-          <p>Drag and drop here</p>
+          <p>Drag and drop here </p>
           </Element>
         </Frame>
       </div>
