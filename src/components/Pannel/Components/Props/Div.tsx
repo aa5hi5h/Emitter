@@ -19,7 +19,7 @@ interface CustomDivProps {
 interface CraftComponent extends React.FC<CustomDivProps> {
   craft: {
     props:{
-      backgroundColor:string,
+      backgroundColor?:string,
       opacity: number;
       margin: number;
       padding: number;
@@ -247,7 +247,7 @@ export const CustomDivSettings: React.FC = () => {
             <input
               id="backgroundColor"
               type="color"
-              value={backgroundColor || "#ffffff"}
+              value={backgroundColor}
               onChange={handleBackgroundColorChange}
               className="border rounded-lg border-gray-300 ml-auto"
             />
@@ -262,7 +262,6 @@ export const CustomDivSettings: React.FC = () => {
 
 CustomDiv.craft = {
   props: {
-    backgroundColor: "#ffffff",
     margin: 0,
     padding: 0,
     borderRadius: 0,

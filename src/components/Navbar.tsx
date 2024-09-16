@@ -36,6 +36,8 @@ const Navbar = () => {
     const DashboardSite = pathname.includes("dashboard")
     const BuildingSite = pathname.includes("build")
     const IsHomePage = pathname === "/"
+    const IsTemplatePage = pathname.includes("template")
+    const IsBuildPage = pathname.includes("build")
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -89,7 +91,7 @@ const Navbar = () => {
             <Link href={"/"}>
             <ul className=" text-2xl flex gap-x-1 items-center font-semibold cursor-pointer">
                 <Satellite size={46} />
-                Emitter
+               Emitter
                 </ul>
                 </Link>
                 <ul className="flex gap-x-4 items-center">
@@ -142,16 +144,22 @@ const Navbar = () => {
             </DialogContent>
               </Dialog>
             )}
-            {BuildingSite && (
-              <div className="flex gap-x-2">
-              <Button className=" bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">
-              <RadioTower size={18} />
-              Go Live
-            </Button>
-              </div>
-            )}
             {
               IsHomePage &&  (
+                <div>
+                  <Button onClick={() => router.push("/dashboard")} className="bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">Dashboard</Button>
+                </div>
+              )
+            }
+             {
+              IsTemplatePage &&  (
+                <div>
+                  <Button onClick={() => router.push("/dashboard")} className="bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">Dashboard</Button>
+                </div>
+              )
+            }
+             {
+              IsBuildPage &&  (
                 <div>
                   <Button onClick={() => router.push("/dashboard")} className="bg-[#5C3B58] flex items-center hover:bg-[#5C3B58]/75 gap-x-1">Dashboard</Button>
                 </div>

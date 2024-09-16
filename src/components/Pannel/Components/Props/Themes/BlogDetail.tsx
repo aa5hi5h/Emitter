@@ -28,7 +28,7 @@ import { TestimonialCarousel } from "../Testimonial"
 import { AccordionFAQ } from "../Faq"
 
 
-export const BlogDetailTemplate = ({ viewMode }:any) => {
+export const BlogDetailTemplate = () => {
   const { connectors: { connect, drag } } = useNode();
 
   const ItemsList = [
@@ -42,11 +42,10 @@ export const BlogDetailTemplate = ({ viewMode }:any) => {
           connect(drag(ref));
         }
       }} className={`flex flex-col space-y-4 w-full`}>
-      { viewMode === "monitor" ?
        <Element is={TemplateDiv} canvas id="main-container" className="flex flex-col space-y-4">
        <Element is={TemplateDiv} canvas id="header-container" className="flex flex-col w-full px-4">
          <Element is={TemplateDiv} canvas id="header-content" className="max-w-6xl w-full my-[1.3rem] mx-auto flex items-center justify-between">
-           <Element is={TemplateText} canvas id="main-heading" className="text-3xl font-semibold tracking-tight">Rentals</Element>
+           <Element is={TemplateText} canvas id="main-heading" className=" font-semibold tracking-tight">Rentals</Element>
            <Element is={TemplateDiv} canvas id="nav-links" className="hidden md:flex gap-4 border border-gray-800 rounded-full py-2 px-3">
              <Element is={TemplateText} canvas id="nav-link-1">Link One</Element>
              <Element is={TemplateText} canvas id="nav-link-2">link two</Element>
@@ -61,10 +60,10 @@ export const BlogDetailTemplate = ({ viewMode }:any) => {
        <Element is={TemplateDiv} canvas id="main-container" className="p-6">
   <Element is={TemplateDiv} canvas id="content-wrapper" className="flex flex-col">
     <Element is={TemplateDiv} canvas id="header-grid" className="grid items-center grid-cols-1 md:grid-cols-2 gap-4">
-      <Element is={TemplateDiv} canvas id="blog-title" className="text-3xl font-bold tracking-tight">Specific Blog title goes here</Element>
+      <Element is={TemplateText} canvas id="blog-title" className="font-bold tracking-tight">Specific Blog title goes here</Element>
       <Element is={TemplateDiv} className="" canvas id="image-container">
         <Element is={TemplateDiv} canvas id="image-wrapper" className="h-[40vh] w-full mb-4 md:mb-0 flex justify-center bg-slate-200 items-center">
-          <Element is={Image} canvas id="blog-image" />
+          <Element is={TemplateImage} size={32} canvas id="blog-image" />
         </Element>
       </Element>
     </Element>
@@ -137,23 +136,17 @@ export const BlogDetailTemplate = ({ viewMode }:any) => {
        </Element>
      </Element>
  </Element >     
-  : <></>
-}
 </div>
   );
 };;
 
 
 BlogDetailTemplate.craft = {
-  props: {
-    viewMode: "monitor",
-  },
   related: {
     settings: () => {
       return (
         <div>
-          <h2>Ecommerce Landing Page Settings</h2>
-          {/* Add settings controls here */}
+          <h2>Select an element which you want to style</h2>
         </div>
       );
     },

@@ -18,6 +18,8 @@ import { useMutation } from "convex/react"
 import { ProjectContext } from "@/app/Context/LoadState"
 import MultiPageNavigation from "../Feature/PageNavigation/page"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useViewMode } from "@/app/Context/ViewMode"
+import UnsavedChangesAlert from "../Utils/SaveAlert"
 interface EditorPannelProp{
   buildID: Id<"projects">
   savedState?: string
@@ -39,13 +41,16 @@ interface Pages {
 const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
 
 
-    const [viewMode,setViewMode] = useState<string>("monitor")
     const { hoveredElement, setHoveredElement } = useHover();
     const { selectedElement, setSelectedElement } = useSelection();
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [currentPage, setCurrentPage] = useState('main');
     const [pages, setPages] = useState<Pages>({
       main: savedState ? JSON.parse(lz.decompress(lz.decodeBase64(savedState))) : null,
   });
+
+
+  const { viewMode } = useViewMode();
 
     const changePage = (pageLink: string) => {
       if (pageLink in pages) {
@@ -67,19 +72,6 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
 
     const updateProject = useMutation(api.project.updateProject);
     
-
-    const viewScreen = () => {
-        switch (viewMode) {
-            case 'mobile':
-              return 'max-w-sm mx-auto';
-              case 'tablet':
-                return "max-w-md mx-auto"
-            case 'monitor':
-              return 'max-w-full';
-            default:
-              return '';
-          }
-    }
 
 
     useEffect(() => {
@@ -134,9 +126,13 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
     }
 }, []);
 
+const handleGetTheme = () => {
+  const jsonState = query.serialize();
+        const compressedState = lz.encodeBase64(lz.compress(jsonState));
+        console.log("STATE_TO_SAVE",compressedState)
 
+}
 
-  
 
 
 
@@ -164,10 +160,6 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
       }
     }, [query, updateProject, buildID]);
 
-    const handleViewMode = (view:string) => {
-        console.log(`View changed to: ${view}`);
-        setViewMode(view)
-    }
 
     const handleClick = (e: React.MouseEvent) => {
       e.stopPropagation(); 
@@ -196,13 +188,13 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
                     <UndoOptions />
                     </span>
                 <span className="bg-slate-200 border-slate-300 border flex gap-2 items-center max-w-max p-2 rounded-md ml-auto mr-[2rem]">
-                    <ViewOptions ViewMode={handleViewMode}  />
+                    <ViewOptions   />
                 </span>
                 </div>
             </div>
             
             <div
-        className={`h-full w-[99%] ${viewScreen()} bg-white rounded-md m-1 p-1 transition-all duration-150 ${
+        className={`h-full w-[99%] bg-white rounded-md m-1 p-1 transition-all duration-150 ${
           selectedElement === null
             ? hoveredElement?.id === "EditorPannel"
               ? "border-blue-400 border-[2px]"
@@ -225,6 +217,11 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
         </div>
         </ScrollArea>
       </div>
+      <UnsavedChangesAlert 
+        isOpen={hasUnsavedChanges} 
+        onSave={handleSaveState}
+        onClose={() => setHasUnsavedChanges(false)}
+      />
         </div>
     )
 }

@@ -34,24 +34,6 @@ const ComponentsProps = () => {
     return (
         <div className="flex flex-col space-y-2">
             <div className="flex gap-x-2 justify-between">
-                <Button variant={"outline"} className="w-[100px] flex flex-col h-[80px]"> <Rows2 /> <h4>Row</h4></Button>
-                <Button 
-                variant={"outline"}
-                ref={(ref) => { if(ref) {connectors.create(ref,<Container  />)}}} 
-                className="w-[100px] flex flex-col h-[80px]"><Square /><h4>Container</h4></Button>
-            </div>
-            <div className="flex gap-x-2 justify-between">
-                <Button 
-                variant={"outline"} 
-                ref={(ref) => {
-                    if (ref) {
-                      connectors.create(ref, <CustomBanner src="https://via.placeholder.com/820x150" alt="Draggable Banner" />);
-                    }
-                  }}
-                className="w-[100px] flex flex-col h-[80px]"><TicketSlash /><h4>Banner</h4></Button>
-                <Button variant={"outline"} className="w-[100px] flex flex-col h-[80px]"><Link2 /><h4>Link</h4></Button>
-            </div>
-            <div className="flex gap-x-2 justify-between">
                 <Button 
                 variant={"outline"} 
                 className="w-[100px] flex flex-col h-[80px]"
@@ -246,11 +228,14 @@ const ComponentsProps = () => {
                   /> )}}}
                 className="w-[100px] flex flex-col h-[80px]"><NotepadText /><h4>Form</h4></Button>
 
-                 <Button 
-                variant={"outline"}
+<Button 
+                variant={"outline"} 
                 ref={(ref) => {
-                    if(ref){ connectors.create(ref, <BlogDetailTemplate  viewMode="monitor" />)}}} 
-                className="w-[100px] flex flex-col h-[80px]"><List /><h4>Template</h4></Button>
+                    if (ref) {
+                      connectors.create(ref, <CustomBanner src="https://via.placeholder.com/820x150" alt="Draggable Banner" />);
+                    }
+                  }}
+                className="w-[100px] flex flex-col h-[80px]"><TicketSlash /><h4>Banner</h4></Button>
             </div>
             
         </div>

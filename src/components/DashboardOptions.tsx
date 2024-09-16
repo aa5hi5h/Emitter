@@ -78,11 +78,24 @@ const DashboardOptions = () => {
   }
 
 
+  const handleTemplateClick = () => {
+     handleActive("Template")
+
+     router.push("/template")
+  }
+
+
+  const handleDashBoardClick = () => {
+     handleActive("Dashboard")
+
+     router.push("/dashboard")
+
+  }
     return (
         <div className="p-2 items-center mb-[-2] px-6 w-full">
            <div className="gap-x-1 flex flex-col space-y-2.5 font-medium cursor-pointer">
            <div
-          onClick={() => handleActive("Dashboard")}
+          onClick={handleDashBoardClick}
           className={`mt-2 p-3 rounded-xl ${
             active === "Dashboard" ? "bg-purple-200 hover:bg-purple-200" : "hover:bg-purple-100"
           }`}
@@ -93,7 +106,7 @@ const DashboardOptions = () => {
                     </span>
                 </div>
                 <div
-          onClick={() => handleActive("Template")}
+          onClick={handleTemplateClick}
           className={`p-3 rounded-xl ${
             active === "Template" ? "bg-purple-200 hover:bg-purple-200" : "hover:bg-purple-100"
           }`}

@@ -11,9 +11,10 @@ import useMeasure from "react-use-measure"
 import {  TemplateDiv } from "./utils/TemplateDiv";
 import { TemplateButton } from "./utils/TemplateButton";
 import { TemplateImage } from "./utils/TemplateImage";
+import { CustomInput } from "../Input";
 
 
-export const EcommerseNavbar = ({ viewMode , children }:any) => {
+export const EcommerseNavbar = ({children }:any) => {
     const { connectors: { connect, drag } } = useNode();
     
     return (
@@ -25,20 +26,13 @@ export const EcommerseNavbar = ({ viewMode , children }:any) => {
         <div className="text-xl font-bold">
             <Text text="logo" />
         </div>
-        {viewMode === "monitor" ? (
           <div className="hidden md:flex space-x-4">
             {children}
-            <Element canvas is={CustomButton} id="Ecom-Nav-Button" children={"Home"} />
-            <Element canvas is={CustomButton} id="Ecom-Nav-Button-2" children={"Product"} />
-            <Element canvas is={CustomButton} id="Ecom-Nav-Button-3" children={"About"} />
-            <Element canvas is={CustomButton} id="Ecom-Nav-Button-4" children={"Contact"} />
+            <Element canvas is={TemplateButton} id="Ecom-Nav-Button" children={"Home"} />
+            <Element canvas is={TemplateButton} id="Ecom-Nav-Button-2" children={"Product"} />
+            <Element canvas is={TemplateButton} id="Ecom-Nav-Button-3" children={"About"} />
+            <Element canvas is={TemplateButton} id="Ecom-Nav-Button-4" children={"Contact"} />
           </div>
-        ) : (
-            <div className="flex gap-2">
-          <Element canvas is={CustomButton} id="Ecom-mob-Nav" children={"Button"}  />
-          <Menu />
-          </div>
-        )}
         <Element canvas is={CustomButton} id="Ecom-mob-Nav-2" children={"SignIn"} />
       </div>
     );
@@ -46,7 +40,7 @@ export const EcommerseNavbar = ({ viewMode , children }:any) => {
 
 
 
-export  const EcommerseFooter = ({ viewMode,children }:any) => {
+export  const EcommerseFooter = ({children }:any) => {
     const { connectors: { connect, drag } } = useNode();
     
     return (
@@ -55,7 +49,7 @@ export  const EcommerseFooter = ({ viewMode,children }:any) => {
           connect(drag(ref));
         }
       }} className="bg-gray-100 p-4 mt-8">
-        <div className={`flex ${viewMode === 'mobile' ? 'flex-col' : 'flex-row justify-between'} items-center`}>
+        <div className={`flex items-center`}>
             <div className="text-sm text-gray-600">
                 <Element className="text-sm text-gray-600" canvas is={TemplateText} id="Ecom-Footer-1" children="&copy; 2024 Your Company. All rights reserved." />
             </div>
@@ -76,7 +70,7 @@ export  const EcommerseFooter = ({ viewMode,children }:any) => {
   };
 
 // Main EcommerceLanding component
-const EcommerceNewLandingTemplate = ({ viewMode }:any) => {
+const EcommerceNewLandingTemplate = () => {
   const { connectors: { connect, drag } } = useNode();
 
   const ItemsList = [
@@ -135,15 +129,27 @@ useEffect(() => {
           connect(drag(ref));
         }
       }} className={`flex flex-col space-y-4 w-full`}>
-      { viewMode === "monitor" ? 
-      <Element is="div"  id="Ecommerse-Template" canvas >
+      <Element is={TemplateDiv} className="" id="learning-platform-main" canvas>
+     <Element is={TemplateDiv} id="learning-platform-header" className="p-4" canvas>
+       <Element is={TemplateDiv} id="learning-platform-header-content" className="flex items-center justify-between" canvas>
+         <Element is={TemplateText} id="learning-platform-logo" className=" font-bold tracking-tight" canvas>Logo</Element>
+         <Element is={TemplateDiv} id="learning-platform-nav" className="flex items-center gap-x-4" canvas>
+           <Element is={TemplateDiv} id="learning-platform-nav-links" className="flex gap-x-2" canvas>
+             <Element is={TemplateText} id="learning-platform-nav-home" canvas>Home</Element>
+             <Element is={TemplateText} id="learning-platform-nav-contact" canvas>Contact</Element>
+             <Element is={TemplateText} id="learning-platform-nav-about" canvas>About</Element>
+           </Element>
+           <Element is={TemplateButton} id="learning-platform-login-button" canvas>Login</Element>
+         </Element>
+       </Element>
+     </Element>
       <Element is={TemplateDiv} id="ecommerce-main-container" className={`flex flex-col space-y-4 w-full`} canvas>
   <Element is={TemplateDiv} id="ecommerce-content-wrapper" className="p-6" canvas>
     <Element is={TemplateDiv} id="ecommerce-hero-section" className="flex flex-col space-y-4 max-w-4xl mb-[14.5rem] mx-auto mt-[4.3rem]" canvas>
       <Element is={TemplateText} id="ecommerce-hero-title" className=" font-bold text-center tracking-tight" canvas>
         Foundation for your commerce platform
       </Element>
-      <Element is={TemplateText} id="ecommerce-hero-subtitle" className="text-slate-800 text-center pb-[1.1rem]" canvas>
+      <Element is={TemplateText} id="ecommerce-hero-subtitle" className=" text-center pb-[1.1rem]" canvas>
         "Building and customizing your own Ecommerce platform with ease."
       </Element>
       <Element is={TemplateDiv} id="ecommerce-hero-buttons" className="flex justify-center gap-x-4" canvas>
@@ -238,124 +244,46 @@ useEffect(() => {
           </Element>
         ))}
       </Element>
+      <Element is={TemplateDiv} id="learning-platform-footer" className="p-3 flex w-full flex-col mb-[2rem]" canvas>
+       <Element is={TemplateDiv} id="learning-platform-footer-divider" className="w-full mt-[3rem] h-[1px] border-gray-700 my-[3rem]" canvas />
+       <Element is={TemplateDiv} id="learning-platform-footer-content" className="flex flex-col md:flex-row space-y-8 mb-[2rem] md:space-y-0 justify-between items-start" canvas>
+         <Element is={TemplateText} id="learning-platform-footer-logo" className="font-bold tracking-tight cursor-pointer pr-8" canvas>Logo</Element>
+         <Element is={TemplateDiv} id="learning-platform-footer-links" className="flex gap-12 items-center" canvas>
+           {[1, 2].map((columnIndex) => (
+             <Element is={TemplateDiv} id={`learning-platform-footer-column-${columnIndex}`} key={columnIndex} className="flex flex-col items-center space-y-4" canvas>
+               <Element is={TemplateText} id={`learning-platform-footer-column-title-${columnIndex}`} className="text-lg font-medium text-slate-700 mb-2 cursor-pointer" canvas>{`Column ${columnIndex}`}</Element>
+               {[...Array(4)].map((_, linkIndex) => (
+                 <Element is={TemplateText} id={`learning-platform-footer-link-${columnIndex}-${linkIndex + 1}`} key={linkIndex} canvas>{`Link ${linkIndex + 1 + (columnIndex - 1) * 4}`}</Element>
+               ))}
+             </Element>
+           ))}
+         </Element>
+         <Element is={TemplateDiv} id="learning-platform-footer-subscribe" className="flex flex-col pl-8" canvas>
+           <Element is={TemplateText} id="learning-platform-footer-subscribe-title" className="text-xl font-semibold text-slate-700" canvas>Subscribe</Element>
+           <Element is={TemplateText} id="learning-platform-footer-subscribe-description" className="text-sm text-muted-foreground" canvas>
+             Join our newsletter to stay up to date on features and releases.
+           </Element>
+           <Element is={TemplateDiv} id="learning-platform-footer-subscribe-form" className="flex gap-4 mt-4" canvas>
+             <Element is={CustomInput} id="learning-platform-footer-subscribe-input" type="email" placeholder="Enter your email" className="focus-visible:ring-offset-0 focus-visible:ring-0 focus:outline-none p-3 rounded-md" canvas />
+             <Element is={TemplateButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
+           </Element>
+         </Element>
+       </Element>
+     </Element>
+   </Element>
     </Element>
   </Element>
 </Element>
-  </Element>
-   : <TemplateDiv className={`flex flex-col space-y-4 w-full`}>
-            <EcommerseNavbar viewMode="mobile" />
-            <TemplateDiv className="p-4">
-            <TemplateDiv className="flex flex-col space-y-4 max-w-4xl mb-[14.5rem] mx-auto mt-[4.3rem]">
-                    <TemplateText className="text-3xl font-bold text-center tracking-tight">Foundation for your commerce platform</TemplateText>
-                    <TemplateText className="text-slate-800 text-sm text-center pb-[1.1rem]">"Building and customizing your own Ecommerce platform with ease."</TemplateText>
-                        <TemplateDiv className="flex justify-center gap-x-4">
-                            <TemplateButton>Button</TemplateButton>
-                            <TemplateButton className="border-slate-300">Button</TemplateButton>
-                        </TemplateDiv>
-            </TemplateDiv>
-            <TemplateDiv className="flex flex-col space-y-4 mb-[8rem]">
-                <TemplateDiv className="flex justify-between gap-x-2">
-                    <TemplateDiv className="flex flex-col space-y-1">
-                        <TemplateText className="text-2xl font-bold tracking-tight">Featured Prodcuts</TemplateText>
-                        <TemplateText className="text-sm text-slate-700">lore mipsum Neque m ipsum quia dolor</TemplateText>
-                    </TemplateDiv>
-                    <TemplateDiv className="flex mt-[6px]" >
-                    <TemplateButton className="flex mt-[6px]">
-                        view
-                    </TemplateButton>
-                    <ChevronRight size={18} />
-                    </TemplateDiv>
-                </TemplateDiv>
-                <TemplateDiv className="overflow-hidden">
-                <TemplateDiv className="max-w-7xl mx-auto">
-                    <motion.div className=" w-full flex gap-x-8" ref={ref} style={{x:xStyles}}
-                onHoverStart={() => {
-                    setMustFinish(true)
-                    setDuration(SLOW_DURATION)
-                }}
-                onHoverEnd={() => {
-                    setMustFinish(true)
-                    setDuration(FAST_DURATION)
-                }} >
-                    {
-                        [...CaraouselItemsList,...CaraouselItemsList].map((item,index) => (
-                            <TemplateDiv key={index} className="mt-[1.3rem]">
-                            <TemplateDiv className="relative hover:cursor-pointer overflow-hidden h-[50vh] min-w-[37vh]">
-      <TemplateDiv className="rounded-lg">
-        <TemplateDiv className="flex flex-col h-[50vh] shadow-sm w-[37vh]">
-          <TemplateDiv className="h-[40vh] w-full flex border-slate-300 border-2 bg-slate-200 opacity-40 rounded-t-lg justify-center items-center">
-            <Image size={36}/>
-          </TemplateDiv>
-          <TemplateDiv className="flex flex-col p-3 border-2 border-slate-200 rounded-b-lg">
-            <TemplateText className="text-xl font-semibold tracking-tight">name</TemplateText>
-            <TemplateText className="text-sm font-medium">price</TemplateText>
-            <TemplateDiv className="flex justify-between w-full gap-2 items-center mt-4">
-              <TemplateButton  className="w-full bg-slate-200 hover:bg-slate-300 transition-all">
-                Add to cart
-              </TemplateButton>
-            </TemplateDiv>
-          </TemplateDiv>
-        </TemplateDiv>
-      </TemplateDiv>
-    </TemplateDiv>
-                            </TemplateDiv>
-                        )
-
-                        )
-                    }
-                    </motion.div>
-                    </TemplateDiv>
-                </TemplateDiv>
-            </TemplateDiv>
-            <TemplateDiv className="flex flex-col space-y-4 mb-[4rem]">
-                <TemplateDiv className="flex justify-between gap-x-2 items-center">
-                    <TemplateDiv className="flex flex-col space-y-1">
-                        <TemplateText className="text-2xl font-bold tracking-tight">Featured shops</TemplateText>
-                        <TemplateText className="text-sm text-slate-700">lore mipsum Neque quia dolor</TemplateText>
-                    </TemplateDiv>
-                    <TemplateButton className="flex">
-                        view
-                     </TemplateButton>
-                </TemplateDiv>
-                <TemplateDiv className="grid grid-cols-2  gap-4 mt-8">
-                    {
-                        storeList.map((item,index) => (
-                            <TemplateDiv className="border-2 border-slate-300 p-4 mt-4 bg-slate-200 rounded-lg shadow-sm">
-      <TemplateDiv className="flex flex-col space-y-8 cursor-pointer">
-        <TemplateDiv className="flex flex-col space-y-1">
-          <TemplateText className="text-xl font-semibold tracking-tight">item's name</TemplateText>
-          <TemplateText className="text-sm text-gray-700 font-medium">description</TemplateText>
-        </TemplateDiv>
-        <TemplateDiv className="flex gap-2 items-center">
-          <Box size={18}/>
-          <TemplateText className="text-sm font-semibold text-gray-700">"X" products</TemplateText>
-        </TemplateDiv>
-      </TemplateDiv>
-    </TemplateDiv>
-                        )
-
-                        )
-                    }
-                    </TemplateDiv>
-            </TemplateDiv>
-            <EcommerseFooter viewMode="mobile" />
-        </TemplateDiv>
-        </TemplateDiv>}
-          
      </div>
   );
 };
 
 EcommerceNewLandingTemplate.craft = {
-  props: {
-    viewMode: "monitor",
-  },
   related: {
     settings: () => {
       return (
         <div>
-          <h2>Ecommerce Landing Page Settings</h2>
-          {/* Add settings controls here */}
+          <h2>Select an Element which you want to change.</h2>
         </div>
       );
     },

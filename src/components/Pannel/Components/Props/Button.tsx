@@ -188,16 +188,6 @@ export const ButtonSettings: React.FC = () => {
   return (
     <div className="flex flex-col space-y-4">
       <div>
-      <div className="border-b flex flex-col border-zinc-300 px-2 py-3">
-        <label className="text-sm text-zinc-900 font-semibold">Link</label>
-        <input
-            type="text"
-            value={ link ||  ''}
-            onChange={(e) => setProp((props: any) => (props.link = e.target.value))}
-            className="w-full border border-gray-300 rounded px-2 py-1"
-            placeholder="Enter page link"
-          />
-      </div>
       <div className="flex flex-col space-y-4">
         <div className="border-b border-zinc-300 px-2 pt-2 ">
           <label className="text-sm text-zinc-900 font-semibold">Sizing</label>

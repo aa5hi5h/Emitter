@@ -28,7 +28,7 @@ import { TestimonialCarousel } from "../Testimonial"
 import { AccordionFAQ } from "../Faq"
 
 // Main EcommerceLanding component
-export const BlogLandingTemplate = ({ viewMode }:any) => {
+export const BlogLandingTemplate = () => {
   const { connectors: { connect, drag } } = useNode();
 
   const TestimonialPropList = [
@@ -60,7 +60,6 @@ export const BlogLandingTemplate = ({ viewMode }:any) => {
           connect(drag(ref));
         }
       }} className={`flex flex-col space-y-4 w-full`}>
-      { viewMode === "monitor" ?
       <Element is={TemplateDiv} id="Blog-Landing-Template" canvas className="" >
        <Element is={TemplateDiv} id="learning-platform-header" className="p-4" canvas>
        <Element is={TemplateDiv} id="learning-platform-header-content" className="flex items-center justify-between" canvas>
@@ -93,7 +92,7 @@ export const BlogLandingTemplate = ({ viewMode }:any) => {
           {[1, 2, 3, 4, 5, 6].map((index) => (
             <Element is={TemplateDiv} canvas id={`post-container-${index}`} key={index} className="flex flex-col">
               <Element is={TemplateDiv} canvas id={`post-image-container-${index}`} className="h-64 w-full bg-slate-200 rounded-md flex justify-center items-center mb-4">
-                <Element is={Image} canvas id={`post-image-${index}`} />
+                <Element is={TemplateImage} size={32} canvas id={`post-image-${index}`} />
               </Element>
               <Element is={TemplateDiv} canvas id={`post-content-${index}`} className="flex flex-col space-y-2">
                 <Element is={TemplateText} canvas id={`post-date-${index}`} className=" font-medium ">
@@ -118,7 +117,7 @@ export const BlogLandingTemplate = ({ viewMode }:any) => {
       <Element is={TemplateDiv} id="learning-platform-footer" className="p-3 flex w-full flex-col mb-[2rem]" canvas>
        <Element is={TemplateDiv} id="learning-platform-footer-divider" className="w-full mt-[3rem] h-[1px] border-gray-700 my-[3rem]" canvas />
        <Element is={TemplateDiv} id="learning-platform-footer-content" className="flex flex-col md:flex-row space-y-8 mb-[2rem] md:space-y-0 justify-between items-start" canvas>
-         <Element is={TemplateText} id="learning-platform-footer-logo" className="text-4xl font-bold tracking-tight cursor-pointer pr-8" canvas>Logo</Element>
+         <Element is={TemplateText} id="learning-platform-footer-logo" className=" font-bold tracking-tight cursor-pointer pr-8" canvas>Logo</Element>
          <Element is={TemplateDiv} id="learning-platform-footer-links" className="flex gap-12 items-center" canvas>
            {[1, 2].map((columnIndex) => (
              <Element is={TemplateDiv} id={`learning-platform-footer-column-${columnIndex}`} key={columnIndex} className="flex flex-col items-center space-y-4" canvas>
@@ -143,22 +142,16 @@ export const BlogLandingTemplate = ({ viewMode }:any) => {
      </Element>
      </Element>
      </Element>
-  : <></>
-}
 </div>
   );
 };
 
 BlogLandingTemplate.craft = {
-  props: {
-    viewMode: "monitor",
-  },
   related: {
     settings: () => {
       return (
         <div>
-          <h2>Ecommerce Landing Page Settings</h2>
-          {/* Add settings controls here */}
+          <h2>Select Element to style them</h2>
         </div>
       );
     },

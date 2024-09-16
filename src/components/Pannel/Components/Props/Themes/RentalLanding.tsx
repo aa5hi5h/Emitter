@@ -28,7 +28,7 @@ import { TestimonialCarousel } from "../Testimonial"
 import { AccordionFAQ } from "../Faq"
 
 
-export const RentalLandingTemplate = ({ viewMode }:any) => {
+export const RentalLandingTemplate = () => {
   const { connectors: { connect, drag } } = useNode();
 
   const ItemsList = [
@@ -42,7 +42,6 @@ export const RentalLandingTemplate = ({ viewMode }:any) => {
           connect(drag(ref));
         }
       }} className={`flex flex-col space-y-4 w-full`}>
-      { viewMode === "monitor" ?
        <Element is={TemplateDiv} canvas id="main-container" className="flex flex-col max-w-[56rem] space-y-4">
        <Element is={TemplateDiv} canvas id="header-container" className="flex flex-col w-full px-4">
          <Element is={TemplateDiv} canvas id="header-content" className="max-w-6xl w-full my-[1.3rem] mx-auto flex items-center justify-between">
@@ -129,23 +128,17 @@ export const RentalLandingTemplate = ({ viewMode }:any) => {
        </Element>
      </Element>
  </Element >     
-  : <></>
-}
 </div>
   );
 };;
 
 
 RentalLandingTemplate.craft = {
-  props: {
-    viewMode: "monitor",
-  },
   related: {
     settings: () => {
       return (
         <div>
-          <h2>Ecommerce Landing Page Settings</h2>
-          {/* Add settings controls here */}
+          <h2>Select Elements to change thier propertise</h2>
         </div>
       );
     },

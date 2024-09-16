@@ -37,7 +37,9 @@ const LayerItem: React.FC<LayerItemProps> = ({ nodeId, depth = 0 }) => {
         className={`rounded-md p-2 flex justify-between ${node.events.selected ? "bg-[#c74db9]/60 hover:hover:bg-[#c74db9]/60" : "hover:bg-[#c74db9]/15"} `}
         onClick={handleSelect}
       >
-        <span className={`text-sm font-medium ${node.events.selected ? "text-white " : "text-slate-800"}`}>{node.data.displayName || node.data.name}</span>
+        <span className={`text-sm font-medium ${node.events.selected ? "text-white " : "text-slate-800"}`}>{((node.data.displayName || node.data.name).length > 12 
+  ? (node.data.displayName || node.data.name).slice(0, 15) + '...' 
+  : (node.data.displayName || node.data.name))}</span>
         <span onClick={handleDelete} >
         <Trash 
             size={14} 

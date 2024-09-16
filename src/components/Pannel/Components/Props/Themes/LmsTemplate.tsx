@@ -28,7 +28,7 @@ import { TestimonialCarousel } from "../Testimonial"
 import { AccordionFAQ } from "../Faq"
 
 // Main EcommerceLanding component
-export const LmsLandingTemplate = ({ viewMode }:any) => {
+export const LmsLandingTemplate = () => {
   const { connectors: { connect, drag } } = useNode();
 
   const TestimonialPropList = [
@@ -60,11 +60,10 @@ export const LmsLandingTemplate = ({ viewMode }:any) => {
           connect(drag(ref));
         }
       }} className={`flex flex-col space-y-4 w-full`}>
-      { viewMode === "monitor" ?
      <Element is={TemplateDiv} className="" id="learning-platform-main" canvas>
      <Element is={TemplateDiv} id="learning-platform-header" className="p-4" canvas>
        <Element is={TemplateDiv} id="learning-platform-header-content" className="flex items-center justify-between" canvas>
-         <Element is={TemplateText} id="learning-platform-logo" className="text-4xl font-bold tracking-tight" canvas>Logo</Element>
+         <Element is={TemplateText} id="learning-platform-logo" className=" font-bold tracking-tight" canvas>Logo</Element>
          <Element is={TemplateDiv} id="learning-platform-nav" className="flex items-center gap-x-4" canvas>
            <Element is={TemplateDiv} id="learning-platform-nav-links" className="flex gap-x-2" canvas>
              <Element is={TemplateText} id="learning-platform-nav-home" canvas>Home</Element>
@@ -202,22 +201,17 @@ export const LmsLandingTemplate = ({ viewMode }:any) => {
          </Element>
        </Element>
      </Element>
-   </Element>:<></>
-}
+   </Element>
 </div>
   );
 };
 
 LmsLandingTemplate.craft = {
-  props: {
-    viewMode: "monitor",
-  },
   related: {
     settings: () => {
       return (
         <div>
-          <h2>Ecommerce Landing Page Settings</h2>
-          {/* Add settings controls here */}
+          <h2>Select Elements to change thier propertise</h2>
         </div>
       );
     },
