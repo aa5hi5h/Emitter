@@ -368,37 +368,6 @@ export const ButtonSettings: React.FC = () => {
               className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
             />
           </span>
-          <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
-        <label className="text-sm font-medium text-slate-600">Align</label>
-        <div className="bg-slate-200 border-slate-300 border flex gap-2 items-center max-w-max p-1 rounded-md ml-auto">
-        <TooltipProvider>
-        <Tooltip>
-            <TooltipTrigger asChild>
-            <AlignLeft  onClick={() => setProp((props:any) => (props.textAlign = 'left'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
-    </TooltipTrigger>
-    <TooltipContent>Left</TooltipContent>
-    </Tooltip>
-    <Tooltip>
-      <TooltipTrigger asChild>
-      <AlignCenter onClick={() => setProp((props:any) => (props.textAlign = 'center'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
-      </TooltipTrigger>
-      <TooltipContent>Center</TooltipContent>
-    </Tooltip>
-    <Tooltip>
-      <TooltipTrigger asChild>
-      <AlignRight  onClick={() => setProp((props:any) => (props.textAlign = 'right'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
-      </TooltipTrigger>
-      <TooltipContent>Right</TooltipContent>
-    </Tooltip>
-    <Tooltip>
-      <TooltipTrigger asChild>
-      <AlignJustify  onClick={() => setProp((props:any) => (props.textAlign = 'justify'))} className={`w-6 h-6 p-1 rounded-md hover:bg-slate-400 opacity-60 hover:opacity-100`} />
-      </TooltipTrigger>
-      <TooltipContent>Justify</TooltipContent>
-    </Tooltip>
-    </TooltipProvider>
-        </div>
-      </span>     
 </div>
 </div>
 
