@@ -103,7 +103,7 @@ const TemplateSection: React.FC = () => {
         <div className="flex flex-col items-center mt-8 max-w-7xl md:w-full">
         <span className="text-5xl flex flex-col gap-x-2 gap-y-2 font-extrabold tracking-tighter text-[#4A4A4A] bg-[#F8F9FA]">
   Try different <span className="text-8xl tracking-tight bg-gradient-to-r from-[#D16BA5] to-[#5B2C83] bg-clip-text text-transparent">
-  Template's</span>
+  Template&apos;s</span>
    <span className='text-4xl'>
   to have a walk through of this app
   </span>

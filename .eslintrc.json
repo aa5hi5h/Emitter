@@ -1,3 +1,7 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  //addedd because of the craft.js elment prop
+  "rules": {
+    "react/no-children-prop": "off"
+  }
 }

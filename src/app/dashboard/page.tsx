@@ -131,7 +131,7 @@ const Dashboard = () => {
         <div className="bg-yellow-500/25 p-3 mt-2 flex-col rounded-md sm:flex sm:flex-row items-center gap-x-2 mb-6">
           <TriangleAlert className="size-8 justify-center sm:size-6" />
           <h4>
-            To ensure fair use, you're currently limited to creating up to 5 projects. 
+            To ensure fair use, you&apos;re currently limited to creating up to 5 projects. 
             Unlock unlimited projects with our upcoming premium plan!
           </h4>
         </div>
