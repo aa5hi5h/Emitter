@@ -4,9 +4,6 @@ import ContentEditable from "react-contenteditable";
 import { useNode } from "@craftjs/core";
 import { Button } from "../../../../../ui/button" 
 import HoverableWrapper from "../../../wrappers/hoverWrapper";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../../../../ui/tooltip";
-import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
-import { Chilanka } from "next/font/google";
 
 interface TemplateButtonProps {
   children: string;
@@ -33,7 +30,7 @@ interface TemplateButtonProps {
 interface CraftComponent extends React.FC<TemplateButtonProps> {
   craft: {
     props:{
-      children: string;
+      children?: string;
   opacity?: number;
   margin?: number;
   padding?: number;
@@ -438,7 +435,6 @@ export const ButtonSettings: React.FC = () => {
 
 TemplateButton.craft = {
   props: {
-    children: "Button",
   },
   related: {
     settings: ButtonSettings
