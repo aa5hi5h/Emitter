@@ -20,7 +20,7 @@ import { Element, useNode } from "@craftjs/core"
 import { Text } from "../Text"
 import { CustomButton } from "../Button"
 import { TemplateText } from "./utils/TemplateText"
-import { TemplateButton } from "./utils/TemplateButton"
+import { TemplateButton } from "./utils/TemplateButton";
 import { TemplateDiv } from "./utils/TemplateDiv"
 import { CustomInput } from "../Input"
 import { TemplateImage } from "./utils/TemplateImage"
