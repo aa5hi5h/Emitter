@@ -9,7 +9,6 @@ import { Element, useNode } from "@craftjs/core"
 import { Text } from "../Text"
 import { CustomButton } from "../Button"
 import { TemplateText } from "./utils/TemplateText"
-import { TemplateButton } from "./utils/TemplateButton"
 import { TemplateDiv } from "./utils/TemplateDiv"
 import { CustomInput } from "../Input"
 import { TemplateImage } from "./utils/TemplateImage"
@@ -49,7 +48,7 @@ const itemsList = [
              <Element is={TemplateText} id="learning-platform-nav-contact" canvas>Contact</Element>
              <Element is={TemplateText} id="learning-platform-nav-about" canvas>About</Element>
            </Element>
-           <Element is={TemplateButton} id="learning-platform-login-button" canvas>Login</Element>
+           <Element is={CustomButton} id="learning-platform-login-button" canvas>Login</Element>
          </Element>
        </Element>
      </Element>
@@ -132,7 +131,7 @@ const itemsList = [
                           <Element canvas is={TemplateText} id={`product-name-${index}`} className=" font-semibold tracking-tight">name</Element>
                           <Element canvas is={TemplateText} id={`product-price-${index}`} className=" font-medium">price</Element>
                           <Element canvas is={TemplateDiv} id={`product-button-container-${index}`} className="flex justify-between w-full gap-2 items-center mt-4">
-                            <Element canvas is={TemplateButton} id={`product-button-${index}`} className="w-full  transition-all">Add to cart</Element>
+                            <Element canvas is={CustomButton} id={`product-button-${index}`} className="w-full  transition-all">Add to cart</Element>
                           </Element>
                         </Element>
                       </Element>
@@ -168,7 +167,7 @@ const itemsList = [
            </Element>
            <Element is={TemplateDiv} id="learning-platform-footer-subscribe-form" className="flex gap-4 mt-4" canvas>
              <Element is={CustomInput} id="learning-platform-footer-subscribe-input" type="email" placeholder="Enter your email" className="focus-visible:ring-offset-0 focus-visible:ring-0 focus:outline-none p-3 rounded-md" canvas />
-             <Element is={TemplateButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
+             <Element is={CustomButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
            </Element>
          </Element>
        </Element>

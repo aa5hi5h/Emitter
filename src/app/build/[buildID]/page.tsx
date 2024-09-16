@@ -33,7 +33,6 @@ import { FeatureCard, FeaturesSection, HeroSection, ImageBackground, LandingPage
 import { PricingSection } from "@/components/Pannel/Components/Props/Pricing";
 import { TemplateText } from "@/components/Pannel/Components/Props/Themes/utils/TemplateText";
 import { TemplateDiv } from "@/components/Pannel/Components/Props/Themes/utils/TemplateDiv";
-import { TemplateButton } from "@/components/Pannel/Components/Props/Themes/utils/TemplateButton";
 import EcommerceNewLandingTemplate from "@/components/Pannel/Components/Props/Themes/EcomLanding";
 import { ArrowUpRight, Box, ChevronRight, CircleUser, Image } from "lucide-react";
 import { TemplateImage } from "@/components/Pannel/Components/Props/Themes/utils/TemplateImage";
@@ -77,7 +76,6 @@ export const resolver: Resolver = {
   FeatureCard,
   TemplateText,
   TemplateDiv,
-  TemplateButton,
   EcommerceNewLandingTemplate,
   ChevronRight,Image,Box,ArrowUpRight,
   BedDouble, CableCar, Crown,

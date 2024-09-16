@@ -20,7 +20,6 @@ import { Element, useNode } from "@craftjs/core"
 import { Text } from "../Text"
 import { CustomButton } from "../Button"
 import { TemplateText } from "./utils/TemplateText"
-import { TemplateButton } from "./utils/TemplateButton";
 import { TemplateDiv } from "./utils/TemplateDiv"
 import { CustomInput } from "../Input"
 import { TemplateImage } from "./utils/TemplateImage"
@@ -52,8 +51,8 @@ export const BlogDetailTemplate = () => {
              <Element is={TemplateText} canvas id="nav-link-3">Link three</Element>
            </Element>
            <Element is={TemplateDiv} canvas id="button-container" className="flex gap-x-4">
-             <Element is={TemplateButton} canvas id="bookings-button">Bookings</Element>
-             <Element is={TemplateButton} canvas id="signin-button">Sign in</Element>
+             <Element is={CustomButton} canvas id="bookings-button">Bookings</Element>
+             <Element is={CustomButton} canvas id="signin-button">Sign in</Element>
            </Element>
          </Element>
        </Element>
@@ -130,7 +129,7 @@ export const BlogDetailTemplate = () => {
            </Element>
            <Element is={TemplateDiv} id="learning-platform-footer-subscribe-form" className="flex gap-4 mt-4" canvas>
              <Element is={CustomInput} id="learning-platform-footer-subscribe-input" type="email" placeholder="Enter your email" className="focus-visible:ring-offset-0 focus-visible:ring-0 focus:outline-none p-3 rounded-md" canvas />
-             <Element is={TemplateButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
+             <Element is={CustomButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
            </Element>
          </Element>
        </Element>

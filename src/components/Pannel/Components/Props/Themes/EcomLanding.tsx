@@ -9,34 +9,11 @@ import { animate, useMotionValue,motion } from "framer-motion"
 import { useState,useEffect } from "react"
 import useMeasure from "react-use-measure"
 import {  TemplateDiv } from "./utils/TemplateDiv";
-import { TemplateButton } from "./utils/TemplateButton";
 import { TemplateImage } from "./utils/TemplateImage";
 import { CustomInput } from "../Input";
 
 
-export const EcommerseNavbar = ({children }:any) => {
-    const { connectors: { connect, drag } } = useNode();
-    
-    return (
-      <div ref={(ref) => {
-        if (ref) {
-          connect(drag(ref));
-        }
-      }} className="flex justify-between items-center p-4 bg-white shadow-sm">
-        <div className="text-xl font-bold">
-            <Text text="logo" />
-        </div>
-          <div className="hidden md:flex space-x-4">
-            {children}
-            <Element canvas is={TemplateButton} id="Ecom-Nav-Button" children={"Home"} />
-            <Element canvas is={TemplateButton} id="Ecom-Nav-Button-2" children={"Product"} />
-            <Element canvas is={TemplateButton} id="Ecom-Nav-Button-3" children={"About"} />
-            <Element canvas is={TemplateButton} id="Ecom-Nav-Button-4" children={"Contact"} />
-          </div>
-        <Element canvas is={CustomButton} id="Ecom-mob-Nav-2" children={"SignIn"} />
-      </div>
-    );
-  };
+
 
 
 
@@ -139,7 +116,7 @@ useEffect(() => {
              <Element is={TemplateText} id="learning-platform-nav-contact" canvas>Contact</Element>
              <Element is={TemplateText} id="learning-platform-nav-about" canvas>About</Element>
            </Element>
-           <Element is={TemplateButton} id="learning-platform-login-button" canvas>Login</Element>
+           <Element is={CustomButton} id="learning-platform-login-button" canvas>Login</Element>
          </Element>
        </Element>
      </Element>
@@ -153,10 +130,10 @@ useEffect(() => {
         "Building and customizing your own Ecommerce platform with ease."
       </Element>
       <Element is={TemplateDiv} id="ecommerce-hero-buttons" className="flex justify-center gap-x-4" canvas>
-        <Element is={TemplateButton} id="ecommerce-hero-button-1" canvas>
+        <Element is={CustomButton} id="ecommerce-hero-button-1" canvas>
           Button
         </Element>
-        <Element is={TemplateButton} id="ecommerce-hero-button-2" className="border-slate-300" canvas>
+        <Element is={CustomButton} id="ecommerce-hero-button-2" className="border-slate-300" canvas>
           Button
         </Element>
       </Element>
@@ -172,7 +149,7 @@ useEffect(() => {
           </Element>
         </Element>
         <Element is={TemplateDiv} id="ecommerce-featured-view-all" className="flex gap-x-2" canvas>
-          <Element is={TemplateButton} id="ecommerce-featured-view-all-button" canvas>
+          <Element is={CustomButton} id="ecommerce-featured-view-all-button" canvas>
             view all products
           </Element>
           <Element is={ChevronRight} id="ecommerce-featured-chevron" canvas />
@@ -194,7 +171,7 @@ useEffect(() => {
                     $$$
                   </Element>
                   <Element is={TemplateDiv} id={`ecommerce-featured-item-button-wrapper-${index}`} className="flex justify-between w-full gap-2 items-center mt-4" canvas>
-                    <Element is={TemplateButton} id={`ecommerce-featured-item-button-${index}`} className="w-full  transition-all" canvas>
+                    <Element is={CustomButton} id={`ecommerce-featured-item-button-${index}`} className="w-full  transition-all" canvas>
                       Add to cart
                     </Element>
                   </Element>
@@ -216,7 +193,7 @@ useEffect(() => {
           </Element>
         </Element>
         <Element is={TemplateDiv} id="ecommerce-categories-view-all" className="flex gap-x-2" canvas>
-          <Element is={TemplateButton} id="ecommerce-categories-view-all-button" canvas>
+          <Element is={CustomButton} id="ecommerce-categories-view-all-button" canvas>
             view all items
           </Element>
           <Element is={ChevronRight} id="ecommerce-categories-chevron" size={18} canvas />
@@ -265,7 +242,7 @@ useEffect(() => {
            </Element>
            <Element is={TemplateDiv} id="learning-platform-footer-subscribe-form" className="flex gap-4 mt-4" canvas>
              <Element is={CustomInput} id="learning-platform-footer-subscribe-input" type="email" placeholder="Enter your email" className="focus-visible:ring-offset-0 focus-visible:ring-0 focus:outline-none p-3 rounded-md" canvas />
-             <Element is={TemplateButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
+             <Element is={CustomButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
            </Element>
          </Element>
        </Element>

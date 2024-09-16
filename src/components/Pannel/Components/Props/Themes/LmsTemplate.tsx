@@ -20,7 +20,6 @@ import { Element, useNode } from "@craftjs/core"
 import { Text } from "../Text"
 import { CustomButton } from "../Button"
 import { TemplateText } from "./utils/TemplateText"
-import { TemplateButton } from "./utils/TemplateButton"
 import { TemplateDiv } from "./utils/TemplateDiv"
 import { CustomInput } from "../Input"
 import { TemplateImage } from "./utils/TemplateImage"
@@ -70,7 +69,7 @@ export const LmsLandingTemplate = () => {
              <Element is={TemplateText} id="learning-platform-nav-contact" canvas>Contact</Element>
              <Element is={TemplateText} id="learning-platform-nav-about" canvas>About</Element>
            </Element>
-           <Element is={TemplateButton} id="learning-platform-login-button" canvas>Login</Element>
+           <Element is={CustomButton} id="learning-platform-login-button" canvas>Login</Element>
          </Element>
        </Element>
      </Element>
@@ -87,8 +86,8 @@ export const LmsLandingTemplate = () => {
              laboris nisi ut aliquip"
            </Element>
            <Element is={TemplateDiv} id="learning-platform-hero-buttons" className="flex gap-x-4 mx-auto pl-[200px]" canvas>
-             <Element is={TemplateButton} id="learning-platform-view-courses-button" canvas>View courses</Element>
-             <Element is={TemplateButton} id="learning-platform-login-button-hero" className="border-slate-300"  canvas>Login</Element>
+             <Element is={CustomButton} id="learning-platform-view-courses-button" canvas>View courses</Element>
+             <Element is={CustomButton} id="learning-platform-login-button-hero" className="border-slate-300"  canvas>Login</Element>
            </Element>
          </Element>
          <Element is={TemplateDiv} id="learning-platform-hero-image" className="flex justify-center h-screen w-full pt-[2.7rem] items-center" canvas>
@@ -137,7 +136,7 @@ export const LmsLandingTemplate = () => {
           <Element is={TemplateText} id="learning-platform-faq-description" className="text-start mt-[0.7rem] pb-[1rem]" canvas>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.
           </Element>
-          <Element is={TemplateButton} id="learning-platform-faq-contact-button" className="max-w-max" canvas>Contact</Element>
+          <Element is={CustomButton} id="learning-platform-faq-contact-button" className="max-w-max" canvas>Contact</Element>
         </Element>
       </Element>
       <Element is={TemplateDiv} id="learning-platform-faq-right" className="col-span-1 px-4" canvas>
@@ -196,7 +195,7 @@ export const LmsLandingTemplate = () => {
            </Element>
            <Element is={TemplateDiv} id="learning-platform-footer-subscribe-form" className="flex gap-4 mt-4" canvas>
              <Element is={CustomInput} id="learning-platform-footer-subscribe-input" type="email" placeholder="Enter your email" className="focus-visible:ring-offset-0 focus-visible:ring-0 focus:outline-none p-3 rounded-md" canvas />
-             <Element is={TemplateButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
+             <Element is={CustomButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
            </Element>
          </Element>
        </Element>

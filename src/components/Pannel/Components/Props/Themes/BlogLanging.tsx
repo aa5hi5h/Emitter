@@ -20,7 +20,6 @@ import { Element, useNode } from "@craftjs/core"
 import { Text } from "../Text"
 import { CustomButton } from "../Button"
 import { TemplateText } from "./utils/TemplateText"
-import { TemplateButton } from "./utils/TemplateButton"
 import { TemplateDiv } from "./utils/TemplateDiv"
 import { CustomInput } from "../Input"
 import { TemplateImage } from "./utils/TemplateImage"
@@ -70,7 +69,7 @@ export const BlogLandingTemplate = () => {
              <Element is={TemplateText} id="learning-platform-nav-contact" canvas>Contact</Element>
              <Element is={TemplateText} id="learning-platform-nav-about" canvas>About</Element>
            </Element>
-           <Element is={TemplateButton} id="learning-platform-login-button" canvas>Login</Element>
+           <Element is={CustomButton} id="learning-platform-login-button" canvas>Login</Element>
          </Element>
        </Element>
      </Element>
@@ -79,8 +78,8 @@ export const BlogLandingTemplate = () => {
     <Element is={TemplateText} id="main-heading" canvas className=" font-bold text-center tracking-tight">Discover my stories and ideas</Element>
     <Element is={TemplateText} id="main-subtitle" canvas className=" text-center pb-[1.1rem]">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo"</Element>
     <Element is={TemplateDiv} id="button-container" canvas className="flex justify-center gap-x-4">
-      <Element is={TemplateButton} canvas id="popular-button">Popular</Element>
-      <Element is={TemplateButton} canvas id="join-button"  className="">Join</Element>
+      <Element is={CustomButton} canvas id="popular-button">Popular</Element>
+      <Element is={CustomButton} canvas id="join-button"  className="">Join</Element>
     </Element>
   </Element>
   <Element is={TemplateDiv} id="main-container" canvas className="container mx-auto px-4">
@@ -104,7 +103,7 @@ export const BlogLandingTemplate = () => {
                 <Element is={TemplateText} canvas id={`post-excerpt-${index}`} className="">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo
                 </Element>
-                <Element is={TemplateButton} canvas id={`read-more-button-${index}`} className="">
+                <Element is={CustomButton} canvas id={`read-more-button-${index}`} className="">
                   Read more
                 </Element>
               </Element>
@@ -135,7 +134,7 @@ export const BlogLandingTemplate = () => {
            </Element>
            <Element is={TemplateDiv} id="learning-platform-footer-subscribe-form" className="flex gap-4 mt-4" canvas>
              <Element is={CustomInput} id="learning-platform-footer-subscribe-input" type="email" placeholder="Enter your email" className="focus-visible:ring-offset-0 focus-visible:ring-0 focus:outline-none p-3 rounded-md" canvas />
-             <Element is={TemplateButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
+             <Element is={CustomButton} id="learning-platform-footer-subscribe-button" canvas>Subscribe</Element>
            </Element>
          </Element>
        </Element>
