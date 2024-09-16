@@ -32,7 +32,28 @@ interface TemplateButtonProps {
 }
 interface CraftComponent extends React.FC<TemplateButtonProps> {
   craft: {
-    props: TemplateButtonProps;
+    props:{
+      children: string;
+  opacity?: number;
+  margin?: number;
+  padding?: number;
+  borderRadius?: number;
+  border?: number;
+  borderColor?: string;
+  width?: number;
+  height?: number;
+  maxWidth?: number;
+  minWidth?: number;
+  textAlign?: string;
+  fontFamily?: string;
+  fontSize?: number;
+  fontWeight?: string;
+  color?: string;
+  letterSpacing?: string;
+  lineHeight?: string;
+  link?: string | null,
+
+    },
     related: {
       settings: React.FC;
     };
