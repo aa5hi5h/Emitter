@@ -28,9 +28,22 @@ import { CustomCarousel } from "@/components/Pannel/Components/Props/Carousel";
 import { TestimonialCarousel } from "@/components/Pannel/Components/Props/Testimonial";
 import { AccordionFAQ } from "@/components/Pannel/Components/Props/Faq";
 import AnimatedGradientBackground from "@/components/Pannel/Components/Props/Gradient";
-import { PricingSection } from "@/components/Pannel/Components/Props/Pricing";
 import { MultiStepForm } from "@/components/Pannel/Components/Props/Form";
-
+import { FeatureCard, FeaturesSection, HeroSection, ImageBackground, LandingPage } from "@/components/Pannel/Components/Props/Landing";
+import { PricingSection } from "@/components/Pannel/Components/Props/Pricing";
+import { TemplateText } from "@/components/Pannel/Components/Props/Themes/utils/TemplateText";
+import { TemplateDiv } from "@/components/Pannel/Components/Props/Themes/utils/TemplateDiv";
+import { TemplateButton } from "@/components/Pannel/Components/Props/Themes/utils/TemplateButton";
+import EcommerceNewLandingTemplate from "@/components/Pannel/Components/Props/Themes/EcomLanding";
+import { ArrowUpRight, Box, ChevronRight, CircleUser, Image } from "lucide-react";
+import { TemplateImage } from "@/components/Pannel/Components/Props/Themes/utils/TemplateImage";
+import LmsLandingTemplate from "@/components/Pannel/Components/Props/Themes/LmsTemplate";
+import BlogLandingTemplate from "@/components/Pannel/Components/Props/Themes/BlogLanging";
+import StoreCollectionTemplate from "@/components/Pannel/Components/Props/Themes/Stores";
+import { MotionTemplateDiv } from "@/components/Pannel/Components/Props/Themes/utils/TemplateMotionDiv";
+import BlogDetailTemplate from "@/components/Pannel/Components/Props/Themes/BlogDetail";
+import { BedDouble, CableCar, Crown, Gem, HandPlatter, Hotel, Menu, Palmtree, Soup, Star, TentTree } from "lucide-react"
+import RentalLandingTemplate from "@/components/Pannel/Components/Props/Themes/RentalLanding";
 
 interface BuildProjectProps{
   params:{
@@ -56,7 +69,27 @@ export const resolver: Resolver = {
   PricingSection,
   AnimatedGradientBackground,
   TestimonialCarousel,
-  MultiStepForm
+  LandingPage,
+  MultiStepForm,
+  HeroSection,
+  ImageBackground,
+  FeaturesSection,
+  FeatureCard,
+  TemplateText,
+  TemplateDiv,
+  TemplateButton,
+  EcommerceNewLandingTemplate,
+  ChevronRight,Image,Box,ArrowUpRight,
+  BedDouble, CableCar, Crown,
+  Gem, HandPlatter, Hotel,CircleUser,
+   Menu, Palmtree, Soup, Star, TentTree ,
+  TemplateImage,
+  LmsLandingTemplate,
+  BlogLandingTemplate,
+  MotionTemplateDiv,
+  StoreCollectionTemplate,
+  RentalLandingTemplate,
+  BlogDetailTemplate
 };
 
 const Build = ({params}: BuildProjectProps) =>  {
@@ -80,7 +113,7 @@ const Build = ({params}: BuildProjectProps) =>  {
             <div className="col-span-1 border-r border-slate-300  h-full overflow-hidden">
               <ComponentsPannel />
             </div>
-            <div className="col-span-4 relative border-r border-slate-300 h-full">
+            <div className="col-span-4 relative overflow-hidden border-r border-slate-300 h-full">
               <EditorPannel buildID={project._id} project={project} savedState={project.savedState} />
             </div>
             <div className="col-span-1 h-full overflow-hidden" >

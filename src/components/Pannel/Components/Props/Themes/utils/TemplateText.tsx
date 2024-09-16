@@ -3,14 +3,14 @@
 import React, { CSSProperties, useRef, useState } from "react";
 import ContentEditable from "react-contenteditable";
 import { useNode } from "@craftjs/core";
-import HoverableWrapper from "../wrappers/hoverWrapper";
+import HoverableWrapper from "../../../wrappers/hoverWrapper";
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ChromePicker, ColorResult } from 'react-color';
 import { useColorPicker } from "@/app/Context/ColorPickerContext";
 
-interface TextProp {
-  text: string;
+interface TemplateTextProp {
+  children?: any,
   fontSize?: number;
   color?: string;
   fontFamily?: string;
@@ -32,10 +32,9 @@ interface TextProp {
   className?: string,
 }
 
-interface CraftComponent extends React.FC<TextProp> {
+interface CraftComponent extends React.FC<TemplateTextProp> {
   craft: {
     props: {
-      text: string;
       fontSize?: number;
       color?: string;
       fontFamily?: string;
@@ -61,8 +60,8 @@ interface CraftComponent extends React.FC<TextProp> {
   };
 }
 
-export const Text: CraftComponent = ({
-  text,
+export const TemplateText: CraftComponent = ({
+  children,
   fontSize,
   color,
   fontFamily,
@@ -82,13 +81,13 @@ export const Text: CraftComponent = ({
   maxWidth,
   minWidth,
   className
-}: TextProp) => {
+}: TemplateTextProp) => {
   const {
     connectors: { connect, drag },
     setProp,
     id,
   } = useNode((node) => ({
-    text: node.data.props.text,
+    children: node.data.props.children,
     id: node.id,
     textAlign: node.data.props.textAlign,
     opacity: node.data.props.opacity,
@@ -108,6 +107,8 @@ export const Text: CraftComponent = ({
 
 
   const TagComponent = tag;
+
+  const safeText = typeof children === 'string' ? children : String(children);
 
   return (
     <HoverableWrapper id={id} type="text">
@@ -135,14 +136,15 @@ export const Text: CraftComponent = ({
           maxWidth: maxWidth ? `${maxWidth}px` : undefined,
           minWidth: minWidth ? `${minWidth}px` : undefined
         }}
+        className={className}
       >
         <ContentEditable
-          html={text}
+          html={safeText}
           disabled={!editable}
           onClick={() => setEditable(true)}
           onBlur={() => {
             setEditable(false);
-            setProp((props) => (props.text = text));
+            setProp((props) => (props.children = children));
           }}
           onChange={(e) => setProp((props) => (props.text = e.target.value))}
           tagName="p"
@@ -156,7 +158,7 @@ export const Text: CraftComponent = ({
 export const TextSettings = () => {
   const {
     actions: { setProp },
-    text,
+    children,
     fontSize,
     color,
     fontFamily,
@@ -176,7 +178,7 @@ export const TextSettings = () => {
     maxWidth,
     minWidth,
   } = useNode((node) => ({
-    text: node.data.props.text,
+    children: node.data.props.text,
     fontSize: node.data.props.fontSize,
     color: node.data.props.color,
     fontFamily: node.data.props.fontFamily,
@@ -270,8 +272,8 @@ export const TextSettings = () => {
   <input
             id="textContent"
             type="text"
-            value={text || ""}
-            onChange={(e) => setProp((props:any) => (props.text = e.target.value))}
+            value={children}
+            onChange={(e) => setProp((props:any) => (props.children = e.target.value))}
             className="border w-[7rem] border-slate-400  bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-purple-800 outline-none"
           />
   
@@ -280,7 +282,7 @@ export const TextSettings = () => {
               <label className="text-sm font-medium text-slate-600" htmlFor="fontFamily">Font</label>
               <select
                 id="fontFamily"
-                value={fontFamily || "Arial"}
+                value={fontFamily || "none"}
                 onChange={(e) => setProp((props:any) => (props.fontFamily = e.target.value))}
                 className="border border-slate-400 w-[7rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
               >
@@ -289,13 +291,14 @@ export const TextSettings = () => {
                 <option value="Georgia">Georgia</option>
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Verdana">Verdana</option>
+                <option value="none">None</option>
               </select>
             </span>
             <span className="flex items-center justify-between px-[8px] ml-[8px] mr-[4px] py-[12px]">
             <label className="text-sm font-medium text-slate-600" htmlFor="fontWeight">Weight</label>
             <select
               id="fontWeight"
-              value={fontWeight || "400"}
+              value={fontWeight}
               onChange={(e) => setProp((props: any) => (props.fontWeight = e.target.value))}
               className="border border-slate-400 w-[7rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
             >
@@ -316,7 +319,7 @@ export const TextSettings = () => {
             <input
               id="color"
               type="color"
-              value={color || "#000000"}
+              value={color}
               onChange={(e) => setProp((props: any) => (props.color = e.target.value))}
               className="border rounded-lg border-gray-300"
             />
@@ -326,7 +329,7 @@ export const TextSettings = () => {
             <input
               id="fontSize"
               type="number"
-              value={fontSize || 16}
+              value={fontSize}
               onChange={(e) => setProp((props:any) => (props.fontSize = parseInt(e.target.value, 10)))}
               className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
             />
@@ -336,7 +339,7 @@ export const TextSettings = () => {
   <input
     id="letterSpacing"
     type="number"
-    value={parseFloat(letterSpacing) || 0}
+    value={parseFloat(letterSpacing)}
     onChange={(e) => {
       const newValue = e.target.value;
       setProp((props: any) => (props.letterSpacing = `${newValue}px`));  
@@ -351,7 +354,7 @@ export const TextSettings = () => {
             <input
               id="lineHeight"
               type="number"
-              value={lineHeight || "1.5"}
+              value={lineHeight}
               step="0.1"
               onChange={(e) => setProp((props:any) => (props.lineHeight = `${e.target.value}`))}
               className="border border-slate-400 w-[5rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
@@ -429,7 +432,7 @@ export const TextSettings = () => {
         <input
           id="margin"
           type="number"
-          value={margin || 0}
+          value={margin}
           onChange={(e) => {
             const newValue = e.target.value;
             setProp((props: any) => (props.margin = parseInt(newValue)));
@@ -443,7 +446,7 @@ export const TextSettings = () => {
         <input
           id="padding"
           type="number"
-          value={padding || 0}
+          value={padding}
           onChange={(e) => {
             const newValue = e.target.value;
             setProp((props: any) => (props.padding = parseInt(newValue)));
@@ -457,7 +460,7 @@ export const TextSettings = () => {
         <input
           id="border"
           type="number"
-          value={border || 0}
+          value={border}
           onChange={(e) => {
             const newValue = e.target.value;
             setProp((props: any) => (props.border = parseInt(newValue)));
@@ -471,7 +474,7 @@ export const TextSettings = () => {
         <input
           id="borderRadius"
           type="number"
-          value={borderRadius || 0}
+          value={borderRadius}
           onChange={(e) => {
             const newValue = e.target.value;
             setProp((props: any) => (props.borderRadius = parseInt(newValue)));
@@ -486,7 +489,7 @@ export const TextSettings = () => {
         <input
           id="borderColor"
           type="color"
-          value={borderColor || "#000000"}
+          value={borderColor}
           onChange={(e) => setProp((props: any) => (props.borderColor = e.target.value))}
           className="border rounded-lg border-gray-300 ml-auto"
         />
@@ -504,7 +507,7 @@ export const TextSettings = () => {
   <input
     id="width"
     type="number"
-    value={width || 0}
+    value={width}
     onChange={(e) => setProp((props: any) => (props.width = parseInt(e.target.value)))
     }
     className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
@@ -518,7 +521,7 @@ export const TextSettings = () => {
   <input
     id="height"
     type="number"
-    value={height || 0}
+    value={height}
     onChange={(e) => setProp((props: any) => (props.height = parseInt(e.target.value)))
     }
     className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
@@ -530,7 +533,7 @@ export const TextSettings = () => {
   <input
     id="maxWidth"
     type="number"
-    value={maxWidth || 0}
+    value={maxWidth}
     onChange={(e) => setProp((props: any) => (props.maxWidth = parseInt(e.target.value)))
     }
     className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
@@ -542,7 +545,7 @@ export const TextSettings = () => {
   <input
     id="minWidth"
     type="number"
-    value={minWidth || 0}
+    value={minWidth}
     onChange={(e) => setProp((props: any) => (props.minWidth = parseInt(e.target.value)))
     }
     className="border border-slate-400 w-[4rem] bg-slate-100 font-semibold text-sm px-2 py-1 rounded-md focus:border-slate-800 outline-none"
@@ -555,27 +558,9 @@ export const TextSettings = () => {
   );
 };
 
-Text.craft = {
+TemplateText.craft = {
   props: {
-    text: "Hi",
-    fontSize: 16,
-    color: "#000000",
-    fontFamily: "Arial",
-    fontWeight: "400",
-    letterSpacing: "0px",
-    lineHeight: "1",
-    textAlign: "left",
-    opacity: 1,
-    tag: "h1",
-    margin: 0,
-    padding: 0,
-    borderRadius: 0,
-    border: 0,
-    borderColor: "#000000",
-    width: 0,
-    height: 0,
-    maxWidth: 1000, 
-    minWidth: 50,
+    
   },
   related: {
     settings: TextSettings,

@@ -17,6 +17,7 @@ import { Id } from "../../../../convex/_generated/dataModel";
 import { useMutation } from "convex/react"
 import { ProjectContext } from "@/app/Context/LoadState"
 import MultiPageNavigation from "../Feature/PageNavigation/page"
+import { ScrollArea } from "@/components/ui/scroll-area"
 interface EditorPannelProp{
   buildID: Id<"projects">
   savedState?: string
@@ -214,11 +215,15 @@ const EditorPannel = ({buildID ,savedState,project}:EditorPannelProp) => {
         onMouseLeave={() => setHoveredElement({id:"", type:""})}
         onClick={handleClick}
       >
+        <ScrollArea className="h-full w-full  overflow-y-auto">
+        <div className="max-h-[calc(100vh-96px)]">
         <Frame>
         <Element is={Container} canvas>
           <p>Drag and drop here </p>
           </Element>
         </Frame>
+        </div>
+        </ScrollArea>
       </div>
         </div>
     )

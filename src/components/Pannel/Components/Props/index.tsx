@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { BadgePlus, ChevronsLeftRightEllipsis, DiamondPlus, Image, Link, Link2, List, RectangleHorizontal, Rows2, Square, SquareCode, SquarePlus, Text, TextCursorInput, TicketSlash } from "lucide-react"
+import { BadgePlus, Blend, ChevronsLeftRightEllipsis, CircleHelp, ClipboardPenLine, DiamondPlus, DollarSign, GalleryHorizontalEnd, Gem, Image, Link, Link2, List, NotepadText, Paintbrush, PaintBucket, Palette, Receipt, RectangleHorizontal, Rows2, ScrollText, Square, SquareCode, SquareMenu, SquarePlay, SquarePlus, Text, TextCursorInput, TicketSlash, Video } from "lucide-react"
 import { useEditor } from "@craftjs/core"
 import {Text as CustomText} from './Text'
 import { CustomButton } from "./Button"
@@ -20,6 +20,13 @@ import { AccordionFAQ } from "./Faq"
 import AnimatedGradientBackground from "./Gradient"
 import { PricingSection } from "./Pricing"
 import { MultiStepForm } from "./Form"
+import { LandingPage } from "./Landing"
+import EcommerceNewLandingTemplate from "./Themes/EcomLanding"
+import LmsLandingTemplate from "./Themes/LmsTemplate"
+import StoreCollectionTemplate from "./Themes/Stores"
+import RentalLandingTemplate from "./Themes/RentalLanding"
+import BlogLandingTemplate from "./Themes/BlogLanging"
+import BlogDetailTemplate from "./Themes/BlogDetail"
 const ComponentsProps = () => {
 
     const {connectors} = useEditor()
@@ -93,14 +100,14 @@ const ComponentsProps = () => {
                 variant={"outline"}
                 ref={(ref) => {
                     if(ref){ connectors.create(ref, <CustomNavbar  />)}}} 
-                className="w-[100px] flex flex-col h-[80px]"><List /><h4>Nav</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><SquareMenu /><h4>Nav</h4></Button>
             </div>
             <div className="flex gap-x-2 justify-between">
             <Button 
                 variant={"outline"}
                 ref={(ref) => { if(ref) {connectors.create(ref,  <CustomVideo src="https://www.w3schools.com/html/mov_bbb.mp4"
                   />)}}}
-                className="w-[100px] flex flex-col h-[80px]"><BadgePlus /><h4>Video</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><Video /><h4>Video</h4></Button>
                 <Button 
                 variant={"outline"}
                 ref={(ref) => {
@@ -109,7 +116,7 @@ const ComponentsProps = () => {
                       "https://via.placeholder.com/800x400?text=Slide+2",
                       "https://via.placeholder.com/800x400?text=Slide+3",
                     ]}  />)}}} 
-                className="w-[100px] flex flex-col h-[80px]">< Image /><h4>Carousel</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><GalleryHorizontalEnd /><h4>Carousel</h4></Button>
             </div>
             <div className="flex gap-x-2 justify-between">
             <Button 
@@ -129,7 +136,7 @@ const ComponentsProps = () => {
                   }
                 ]}
                   />)}}}
-                className="w-[100px] flex flex-col h-[80px]"><BadgePlus /><h4>Testimonials</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><ClipboardPenLine /><h4>Testimonials</h4></Button>
                 <Button 
                 variant={"outline"}
                 ref={(ref) => {
@@ -151,14 +158,14 @@ const ComponentsProps = () => {
                         answer: "Once your order ships, you'll receive a tracking number via email that you can use to monitor your package's progress."
                       }
                     ]} />)}}} 
-                className="w-[100px] flex flex-col h-[80px]">< Image /><h4>FAQs</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><CircleHelp /><h4>FAQs</h4></Button>
             </div>
             <div className="flex gap-x-2 justify-between">
             <Button 
                 variant={"outline"}
                 ref={(ref) => { if(ref) {connectors.create(ref,  <AnimatedGradientBackground  padding={20} colorPalette= {'sunset'} duration={10000}
                   />)}}}
-                className="w-[100px] flex flex-col h-[80px]"><BadgePlus /><h4>Gradient</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><PaintBucket /><h4>Gradient</h4></Button>
                 <Button 
                 variant={"outline"}
                 ref={(ref) => {
@@ -186,7 +193,7 @@ const ComponentsProps = () => {
                       ctaLink: "#",
                       highlighted: false,
                     },]}  />)}}} 
-                className="w-[100px] flex flex-col h-[80px]"><List /><h4>Pricing</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><Gem /><h4>Pricing</h4></Button>
             </div>
             <div className="flex gap-x-2 justify-between">
             <Button 
@@ -237,7 +244,13 @@ const ComponentsProps = () => {
       submitButtonText= "Submit"
 
                   /> )}}}
-                className="w-[100px] flex flex-col h-[80px]"><BadgePlus /><h4>Form</h4></Button>
+                className="w-[100px] flex flex-col h-[80px]"><NotepadText /><h4>Form</h4></Button>
+
+                 <Button 
+                variant={"outline"}
+                ref={(ref) => {
+                    if(ref){ connectors.create(ref, <BlogDetailTemplate  viewMode="monitor" />)}}} 
+                className="w-[100px] flex flex-col h-[80px]"><List /><h4>Template</h4></Button>
             </div>
             
         </div>

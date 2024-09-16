@@ -12,6 +12,7 @@ interface InputProps {
   borderColor?: string;
   backgroundColor?: string;
   textColor?: string;
+  className?: string
 }
 
 interface CraftComponent extends React.FC<InputProps> {
@@ -32,6 +33,7 @@ export const CustomInput: CraftComponent = ({
   borderColor = "#cccccc",
   backgroundColor = "#ffffff",
   textColor = "#000000",
+  className
 }) => {
   const {
     connectors: { connect, drag },
@@ -62,6 +64,7 @@ export const CustomInput: CraftComponent = ({
             color: textColor,
             padding: "8px",
           }}
+          className={className}
           readOnly
         />
       </div>

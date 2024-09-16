@@ -27,7 +27,8 @@ interface ButtonProps {
   color?: string;
   letterSpacing?: string;
   lineHeight?: string;
-  link?: string | null
+  link?: string | null,
+  className?: string
 }
 interface CraftComponent extends React.FC<ButtonProps> {
   craft: {
@@ -57,7 +58,8 @@ export const CustomButton: CraftComponent = ({
   color,
   letterSpacing,
   lineHeight,
-  link
+  link,
+  className
 }) => {
   const {
     connectors: { connect, drag },
@@ -107,7 +109,7 @@ export const CustomButton: CraftComponent = ({
           minWidth: minWidth ? `${minWidth}px` : undefined
         }}
       >
-         <Button >
+         <Button className={className}  >
           <ContentEditable
             html={children}
             style={{ 
@@ -115,7 +117,7 @@ export const CustomButton: CraftComponent = ({
               fontFamily, 
               fontSize: `${fontSize}px`, 
               fontWeight, 
-              color, 
+              color: color === "#000000" ? "white" : color, 
               letterSpacing, 
               lineHeight 
             }}
@@ -315,7 +317,7 @@ export const ButtonSettings: React.FC = () => {
             <input
               id="color"
               type="color"
-              value={color || "#000000"}
+              value={color || "#FFFFFF"}
               onChange={(e) => setProp((props: any) => (props.color = e.target.value))}
               className="border rounded-lg border-gray-300"
             />
@@ -463,15 +465,15 @@ CustomButton.craft = {
     borderRadius: 0,
     border: 0,
     borderColor: "#000000",
-    width: 100,
-    height: 40,
-    maxWidth: 300,
-    minWidth: 50,
+    width: 0,
+    height: 0,
+    maxWidth: 0,
+    minWidth: 0,
     textAlign: 'left',
     fontFamily: 'Arial',
     fontSize: 16,
-    fontWeight: "700",
-    color: '#000000',
+    fontWeight: "",
+    color: '',
     letterSpacing: '0px',
     lineHeight: '1.5',
     link: null
