@@ -76,7 +76,7 @@ export const BlogLandingTemplate = () => {
      <Element is={TemplateDiv} id="main-container" canvas className="p-6">
   <Element is={TemplateDiv} id="header-container" canvas className="flex flex-col space-y-4 max-w-xl mx-auto mt-[4.3rem]">
     <Element is={TemplateText} id="main-heading" canvas className=" font-bold text-center tracking-tight">Discover my stories and ideas</Element>
-    <Element is={TemplateText} id="main-subtitle" canvas className=" text-center pb-[1.1rem]">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo"</Element>
+    <Element is={TemplateText} id="main-subtitle" canvas className=" text-center pb-[1.1rem]">&quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo&quot;</Element>
     <Element is={TemplateDiv} id="button-container" canvas className="flex justify-center gap-x-4">
       <Element is={CustomButton} canvas id="popular-button">Popular</Element>
       <Element is={CustomButton} canvas id="join-button"  className="">Join</Element>

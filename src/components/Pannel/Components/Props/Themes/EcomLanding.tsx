@@ -127,7 +127,7 @@ useEffect(() => {
         Foundation for your commerce platform
       </Element>
       <Element is={TemplateText} id="ecommerce-hero-subtitle" className=" text-center pb-[1.1rem]" canvas>
-        "Building and customizing your own Ecommerce platform with ease."
+      &quot;Building and customizing your own Ecommerce platform with ease.&quot;
       </Element>
       <Element is={TemplateDiv} id="ecommerce-hero-buttons" className="flex justify-center gap-x-4" canvas>
         <Element is={CustomButton} id="ecommerce-hero-button-1" canvas>
@@ -165,7 +165,7 @@ useEffect(() => {
                 </Element>
                 <Element is={TemplateDiv} id={`ecommerce-featured-item-details-${index}`} className="flex flex-col p-3 border-2 border-slate-200 rounded-b-lg" canvas>
                   <Element is={TemplateText} id={`ecommerce-featured-item-name-${index}`} className=" font-semibold tracking-tight" canvas>
-                    Item's name
+                    Item&apos;s name
                   </Element>
                   <Element is={TemplateText} id={`ecommerce-featured-item-price-${index}`} className=" font-medium" canvas>
                     $$$
@@ -205,7 +205,7 @@ useEffect(() => {
             <Element is={TemplateDiv} id={`ecommerce-category-content-${index}`} className="flex flex-col space-y-8 cursor-pointer" canvas>
               <Element is={TemplateDiv} id={`ecommerce-category-details-${index}`} className="flex flex-col space-y-1" canvas>
                 <Element is={TemplateText} id={`ecommerce-category-name-${index}`} className=" font-semibold tracking-tight" canvas>
-                  item's name
+                  item&apos;s name
                 </Element>
                 <Element is={TemplateText} id={`ecommerce-category-description-${index}`} className=" font-medium" canvas>
                   description
@@ -214,7 +214,7 @@ useEffect(() => {
               <Element is={TemplateDiv} id={`ecommerce-category-products-${index}`} className="flex gap-2 items-center" canvas>
                 <Element is={Box} id={`ecommerce-category-box-icon-${index}`} size={18} canvas />
                 <Element is={TemplateText} id={`ecommerce-category-product-count-${index}`} className="font-semibold " canvas>
-                  "X" products
+                &quot;X&quot; products
                 </Element>
               </Element>
             </Element>

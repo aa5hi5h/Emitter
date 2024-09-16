@@ -99,7 +99,7 @@ export const BlogDetailTemplate = () => {
                 </Element>
               </Element>
               <Element is={TemplateText} canvas id={`comment-title-${index}`} className="font-medium">
-                Comment title displays here. e.g-"{comment}"
+                Comment title displays here. e.g-&quot;{comment}&quot;
               </Element>
             </Element>
           ))}

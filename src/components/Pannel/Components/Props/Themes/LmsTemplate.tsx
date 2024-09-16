@@ -81,9 +81,9 @@ export const LmsLandingTemplate = () => {
              Improve your learning experience
            </Element>
            <Element is={TemplateText} id="learning-platform-hero-description" className=" pb-[1.1rem] text-center pt-[0.2rem]" canvas>
-             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+           &quot;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
              ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-             laboris nisi ut aliquip"
+             laboris nisi ut aliquip&quot;
            </Element>
            <Element is={TemplateDiv} id="learning-platform-hero-buttons" className="flex gap-x-4 mx-auto pl-[200px]" canvas>
              <Element is={CustomButton} id="learning-platform-view-courses-button" canvas>View courses</Element>
