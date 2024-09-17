@@ -182,6 +182,13 @@ const handleGetTheme = () => {
                 >
                         Save
                     </Button>
+                    <Button 
+                className="gap-1 bg-[#c74db9] hover:bg-[#c74db9]/80 hover:text-white text-white " 
+                variant={"outline"}
+                onClick={handleGetTheme}
+                >
+                        Theme
+                    </Button>
                 </span>
                 <div className="flex">
                     <span className="bg-slate-200 border-slate-300 border flex gap-2 items-center max-w-max p-2 rounded-md ml-auto mr-[1rem]">

@@ -56,7 +56,7 @@ const itemsList = [
   <Element is={TemplateDiv} canvas id="trending-stores" className="flex flex-col space-y-4 mb-[4rem] mx-[0.7rem]">
     <Element is={TemplateDiv} canvas id="trending-header" className="flex justify-between items-center">
       <Element is={TemplateDiv} canvas id="trending-title" className="flex flex-col space-y-2">
-        <Element is={TemplateText} canvas id="trending-heading" className=" font-bold tracking-tight">Trending store&apso;s this week</Element>
+        <Element is={TemplateText} canvas id="trending-heading" className=" font-bold tracking-tight">Trending stores this week</Element>
         <Element is={TemplateText} canvas id="trending-subheading" className="">lore mipsum Neque porro quisquam est qui dolorem ipsum quia dolor</Element>
       </Element>
     </Element>
@@ -65,12 +65,12 @@ const itemsList = [
         <Element is={TemplateDiv} canvas id={`trending-item-${index}`} key={index} className="border-2 border-slate-300 p-4 mt-4 bg-slate-200 rounded-lg shadow-sm">
           <Element is={TemplateDiv} canvas id={`trending-item-content-${index}`} className="flex flex-col space-y-8 cursor-pointer">
             <Element is={TemplateDiv} canvas id={`trending-item-details-${index}`} className="flex flex-col space-y-1">
-              <Element is={TemplateText} canvas id={`trending-item-name-${index}`} className=" font-semibold tracking-tight">item&apos;s name</Element>
+              <Element is={TemplateText} canvas id={`trending-item-name-${index}`} className=" font-semibold tracking-tight">items name</Element>
               <Element is={TemplateText} canvas id={`trending-item-description-${index}`} className=" font-medium">description</Element>
             </Element>
             <Element is={TemplateDiv} canvas id={`trending-item-products-${index}`} className="flex gap-2 items-center">
               <Element is={Box} canvas id={`trending-item-box-${index}`} size={18} />
-              <Element is={TemplateText} canvas id={`trending-item-count-${index}`} className=" font-semibold text-gray-700">&quot;X&quot; products</Element>
+              <Element is={TemplateText} canvas id={`trending-item-count-${index}`} className=" font-semibold text-gray-700">X products</Element>
             </Element>
           </Element>
         </Element>
@@ -81,7 +81,7 @@ const itemsList = [
   <Element is={TemplateDiv} id="sale-stores" canvas className="flex flex-col space-y-4 mb-[4rem] mx-[0.7rem]">
     <Element is={TemplateDiv} id="sale-header" canvas className="flex justify-between items-center">
       <Element is={TemplateDiv} id="sale-title" canvas className="flex flex-col space-y-2">
-        <Element is={TemplateText} id="sale-heading" canvas className="font-bold tracking-tight">Store&apos;s having sales</Element>
+        <Element is={TemplateText} id="sale-heading" canvas className="font-bold tracking-tight">Stores having sales</Element>
       </Element>
     </Element>
     <Element is={TemplateDiv} id="sale-items" canvas className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
@@ -89,12 +89,12 @@ const itemsList = [
         <Element is={TemplateDiv} canvas id={`sale-item-${index}`} key={index} className="border-2 border-slate-300 p-4 mt-4 bg-slate-200 rounded-lg shadow-sm">
           <Element is={TemplateDiv} canvas id={`sale-item-content-${index}`} className="flex flex-col space-y-8 cursor-pointer">
             <Element is={TemplateDiv} canvas id={`sale-item-details-${index}`} className="flex flex-col space-y-1">
-              <Element is={TemplateText} canvas id={`sale-item-name-${index}`} className=" font-semibold tracking-tight">item&apos;s name</Element>
+              <Element is={TemplateText} canvas id={`sale-item-name-${index}`} className=" font-semibold tracking-tight">items name</Element>
               <Element is={TemplateText} canvas id={`sale-item-description-${index}`} className=" font-medium">description</Element>
             </Element>
             <Element is={TemplateDiv} canvas id={`sale-item-products-${index}`} className="flex gap-2 items-center">
               <Element is={Box} canvas id={`sale-item-box-${index}`} size={18} />
-              <Element is={TemplateText} canvas id={`sale-item-count-${index}`} className=" font-semibold">&quot;X&quot; products</Element>
+              <Element is={TemplateText} canvas id={`sale-item-count-${index}`} className=" font-semibold">X products</Element>
             </Element>
           </Element>
         </Element>

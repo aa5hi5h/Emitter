@@ -86,7 +86,7 @@ export const RentalLandingTemplate = () => {
                          <Element is={TemplateImage} canvas id={`item-image-${index}`} size={36} />
                        </Element>
                        <Element is={TemplateDiv} canvas id={`item-details-${index}`} className="flex flex-col p-3 border-2 border-slate-200 rounded-b-lg">
-                         <Element is={TemplateText} canvas id={`item-name-${index}`} className=" font-semibold tracking-tight">Place&apos;s name</Element>
+                         <Element is={TemplateText} canvas id={`item-name-${index}`} className=" font-semibold tracking-tight">Places name</Element>
                          <Element is={TemplateText} canvas id={`item-price-${index}`} className=" font-medium">$$$</Element>
                          <Element is={TemplateDiv} canvas id={`item-button-container-${index}`} className="flex justify-between w-full gap-2 items-center mt-4">
                            <Element is={CustomButton} canvas id={`item-book-button-${index}`} className="w-full transition-all">Book</Element>

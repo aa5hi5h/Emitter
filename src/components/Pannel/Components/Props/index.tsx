@@ -1,6 +1,6 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { BadgePlus, Blend, ChevronsLeftRightEllipsis, CircleHelp, ClipboardPenLine, DiamondPlus, DollarSign, GalleryHorizontalEnd, Gem, Image, Link, Link2, List, NotepadText, Paintbrush, PaintBucket, Palette, Receipt, RectangleHorizontal, Rows2, ScrollText, Square, SquareCode, SquareMenu, SquarePlay, SquarePlus, Text, TextCursorInput, TicketSlash, Video } from "lucide-react"
+import { BadgePlus, Blend, ChevronsLeftRightEllipsis, CircleHelp, ClipboardPenLine, DiamondPlus, DollarSign, GalleryHorizontalEnd, Gem, Image, LayoutDashboard, Link, Link2, List, NotepadText, Paintbrush, PaintBucket, Palette, Receipt, RectangleHorizontal, Rows2, ScrollText, Square, SquareCode, SquareMenu, SquarePlay, SquarePlus, Text, TextCursorInput, TicketSlash, Video } from "lucide-react"
 import { useEditor } from "@craftjs/core"
 import {Text as CustomText} from './Text'
 import { CustomButton } from "./Button"
@@ -236,6 +236,21 @@ const ComponentsProps = () => {
                     }
                   }}
                 className="w-[100px] flex flex-col h-[80px]"><TicketSlash /><h4>Banner</h4></Button>
+            </div>
+            <div className="flex gap-x-2 justify-between">
+                <Button 
+                variant={"outline"} 
+                className="w-[100px] flex flex-col h-[80px]"
+                ref={(ref) => {
+                    if(ref){ connectors.create(ref, <CustomButton >Buttton</CustomButton>)}}} ><RectangleHorizontal /><h4>Button</h4></Button>
+                <Button 
+                variant={"outline"} 
+                ref={(ref) => {
+                    if (ref) {
+                      connectors.create(ref, <StoreCollectionTemplate />);
+                    }
+                  }}
+                className="w-[100px] flex flex-col h-[80px]"><LayoutDashboard /><h4>Template</h4></Button>
             </div>
             
         </div>
