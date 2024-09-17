@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, Share2, Store } from 'lucide-react';
+import { Heart, Loader2, Share2, Store } from 'lucide-react';
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
 import { Id } from '../../../convex/_generated/dataModel';
@@ -57,6 +57,8 @@ const TemplateSection: React.FC = () => {
   const createProjectWithTemplate = useMutation(api.project.createProjectWithTemplate);
   const router = useRouter();
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateFolder | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isHeroLoading, setIsHeroLoading] = useState(false);
 
   
   const templateFolder: TemplateFolder[] = [
@@ -69,6 +71,8 @@ const TemplateSection: React.FC = () => {
 
 
   const handleClick = async (template:TemplateFolder) => {
+    setIsLoading(true);
+    setSelectedTemplate(template);
     try {
       const projectId = await createProjectWithTemplate({
         title: template.alt,
@@ -78,11 +82,16 @@ const TemplateSection: React.FC = () => {
     } catch (error) {
       console.error("Failed to create project:", error);
       alert("An error occurred while creating the project. Please try again.");
+    }finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     }
   };
 
 
   const handleClickHero = async() => {
+    setIsHeroLoading(true)
     try {
       const projectId = await createProjectWithTemplate({
         title: "Ecommerse",
@@ -91,6 +100,10 @@ const TemplateSection: React.FC = () => {
     } catch (error) {
       console.error("Failed to create project:", error);
       alert("An error occurred while creating the project. Please try again.");
+    } finally {
+      setTimeout(() => {
+        setIsHeroLoading(false);
+      }, 3000);
     }
   };
 
@@ -109,21 +122,26 @@ const TemplateSection: React.FC = () => {
             </span>
           </span>
         </div>
-        <motion.div 
+        <motion.div
           onClick={handleClickHero}
-          className='mt-8 md:mt-0 flex flex-col items-center md:ml-4 border border-purple-500 rounded-lg shadow-lg overflow-hidden w-full md:w-1/2'
+          className='mt-8 md:mt-0 flex flex-col items-center md:ml-4 border border-purple-500 rounded-lg shadow-lg overflow-hidden w-full md:w-1/2 cursor-pointer relative'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           whileHover={{ scale: 1.05, boxShadow: "0 10px 20px rgba(0,0,0,0.2)" }}
         >
-          <Image 
-            src={EcomLandingPng} 
-            alt='Ecom-Landing' 
-            width={1000} 
-            height={800} 
+          <Image
+            src={EcomLandingPng}
+            alt='Ecom-Landing'
+            width={1000}
+            height={800}
             className='rounded-lg object-cover w-full h-auto'
           />
+          {isHeroLoading && (
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <Loader2 className="w-16 h-16 animate-spin text-purple-500" />
+            </div>
+          )}
         </motion.div>
       </div>
       <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
@@ -131,7 +149,7 @@ const TemplateSection: React.FC = () => {
           <div key={template.id}>
             <motion.div
               onClick={() => handleClick(template)}
-              className="relative group border border-purple-500 rounded-md shadow-lg overflow-hidden"
+              className="relative group border border-purple-500 rounded-md shadow-lg overflow-hidden cursor-pointer"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >
@@ -142,27 +160,33 @@ const TemplateSection: React.FC = () => {
                 height={500}
                 className="rounded-lg shadow-md w-full h-auto"
               />
-              <motion.div
-                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-              >
-                <motion.a
-                  className="text-white flex items-center gap-2"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
+              {isLoading && selectedTemplate?.id === template.id ? (
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                  <Loader2 className="w-16 h-16 animate-spin text-purple-500" />
+                </div>
+              ) : (
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
                 >
-                  View Template
-                  <motion.span
-                    initial={{ x: -5, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
+                  <motion.a
+                    className="text-white flex items-center gap-2"
+                    whileHover={{ x: 5 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ArrowRight size={20} />
-                  </motion.span>
-                </motion.a>
-              </motion.div>
+                    View Template
+                    <motion.span
+                      initial={{ x: -5, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ArrowRight size={20} />
+                    </motion.span>
+                  </motion.a>
+                </motion.div>
+              )}
             </motion.div>
             <h3 className="mt-4 text-base md:text-lg font-semibold text-gray-800 tracking-wide text-center">
               {template.alt.replace(/-/g, ' ')}

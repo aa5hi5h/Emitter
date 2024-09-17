@@ -1,9 +1,10 @@
 "use client"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Loader2 } from "lucide-react"
 import { Button } from "./ui/button"
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 interface TemplateFolder {
     id: number;
     src: string;
@@ -15,12 +16,15 @@ interface TemplateFolder {
 
 const DemoButton = () => {
 
+  const [isLoading, setIsLoading] = useState(false);
+
     const createProjectWithTemplate = useMutation(api.project.createProjectWithTemplate);
 
     const router = useRouter()
     
    
     const handleClickHero = async() => {
+      setIsLoading(true);
       try {
         const projectId = await createProjectWithTemplate({
           title: "Ecommerse",
@@ -29,12 +33,24 @@ const DemoButton = () => {
       } catch (error) {
         console.error("Failed to create project:", error);
         alert("An error occurred while creating the project. Please try again.");
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
       }
     };
 
     return (
         <Button onClick={handleClickHero} size="sm" className="rounded-full cursor-pointer bg-[#c74db9] hover:bg-[#c74db9]/80 flex border border-foreground/20">
-        Try Demo <ArrowRight className="w-4 h-4 ml-1" />
+        {isLoading ? (
+        <>
+          Creating <Loader2 className="w-4 h-4 ml-1 animate-spin" />
+        </>
+      ) : (
+        <>
+          Try Demo <ArrowRight className="w-4 h-4 ml-1" />
+        </>
+      )}
       </Button>
     )
 }
