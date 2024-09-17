@@ -1,10 +1,16 @@
 "use client";
-import React from "react";
-import { useEditor } from "@craftjs/core";
-import { FlipHorizontal, FlipHorizontal2, FlipVertical, FlipVertical2, AlignHorizontalSpaceAround, AlignVerticalSpaceAround } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Element, useEditor } from "@craftjs/core";
+import { FlipHorizontal, FlipHorizontal2, FlipVertical, FlipVertical2, AlignHorizontalSpaceAround, AlignVerticalSpaceAround, Frame, X } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { Container } from "../Components/Props/Container";
 
-const PropertisePannel = () => {
+const PropertisePannel = ({ activePanel, setActivePanel }:any) => {
+
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+
   const { selected } = useEditor((state) => {
     const selectedNodeIds = Array.from(state.events.selected);
     let selected;
@@ -23,13 +29,26 @@ const PropertisePannel = () => {
     };
   });
 
-  if (!selected) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <p className="text-gray-500">Please select an element to view its properties</p>
-      </div>
-    );
-  }
+
+  useEffect(() => {
+    if (selected?.settings) {
+      setIsPanelOpen(true);
+    } else {
+      setIsPanelOpen(false);
+    }
+  }, [selected,setIsPanelOpen]);
+
+  useEffect(() => {
+    if (isPanelOpen) {
+      setActivePanel('properties');
+    } else {
+      setActivePanel(null);
+    }
+  }, [isPanelOpen, setActivePanel]);
+
+  const handleClose = () => {
+    setIsPanelOpen(false);
+  };
 
   return (
     <div className="flex flex-col h-full w-full">
@@ -42,10 +61,20 @@ const PropertisePannel = () => {
           <FlipVertical2 opacity={0.2} />
           <AlignHorizontalSpaceAround opacity={0.2} />
         </span>
+        <Button 
+          onClick={handleClose}
+          className=" md:hidden pr-4"
+          variant="ghost"
+          size="icon"
+        >
+          <X className="h-6 w-6" />
+        </Button>
       </div>
       <ScrollArea className="h-full w-full  overflow-y-auto">
         <div className="max-h-[calc(100vh-96px)]"> {/* Subtracts header height */}
-          {selected.settings && React.createElement(selected.settings)}
+          { selected ? selected.settings && React.createElement(selected.settings) :  <div className="flex items-center justify-center h-full">
+        <p className="text-gray-500">Please select an element to view its properties</p>
+      </div>}
         </div>
       </ScrollArea>
     </div>

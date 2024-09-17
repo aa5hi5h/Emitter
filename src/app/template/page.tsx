@@ -96,20 +96,22 @@ const TemplateSection: React.FC = () => {
 
 
   return (
-    <div className="w-full relative flex flex-col px-4 md:px-0 py-8">
-      <div className="flex items-center justify-between py-5 md:py-10 h-full">
-        <div className="flex flex-col items-center mt-8 max-w-7xl md:w-full">
-        <span className="text-5xl flex flex-col gap-x-2 gap-y-2 font-extrabold tracking-tighter text-[#4A4A4A] bg-[#F8F9FA]">
-  Try different <span className="text-8xl tracking-tight bg-gradient-to-r from-[#D16BA5] to-[#5B2C83] bg-clip-text text-transparent">
-  Template&apos;s</span>
-   <span className='text-4xl'>
-  to have a walk through of this app
-  </span>
-</span>
+    <div className="w-full relative flex flex-col px-4 py-8">
+      <div className="flex flex-col md:flex-row items-center justify-between py-5 md:py-10">
+        <div className="flex flex-col items-center mt-8 w-full md:w-1/2">
+          <span className="text-3xl md:text-5xl flex flex-col gap-y-2 font-extrabold tracking-tighter text-[#4A4A4A] bg-[#F8F9FA] text-center md:text-left">
+            Try different{' '}
+            <span className="text-5xl md:text-8xl tracking-tight bg-gradient-to-r from-[#D16BA5] to-[#5B2C83] bg-clip-text text-transparent">
+              Template&apos;s
+            </span>
+            <span className='text-2xl md:text-4xl'>
+              to have a walk through of this app
+            </span>
+          </span>
         </div>
         <motion.div 
-        onClick={handleClickHero}
-          className='mt-8 flex flex-col items-center ml-4 border mr-16 border-purple-500 rounded-lg shadow-lg overflow-hidden'
+          onClick={handleClickHero}
+          className='mt-8 md:mt-0 flex flex-col items-center md:ml-4 border border-purple-500 rounded-lg shadow-lg overflow-hidden w-full md:w-1/2'
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -120,52 +122,51 @@ const TemplateSection: React.FC = () => {
             alt='Ecom-Landing' 
             width={1000} 
             height={800} 
-            className='rounded-lg object-cover'
+            className='rounded-lg object-cover w-full h-auto'
           />
         </motion.div>
       </div>
-      <div className="mt-16 grid grid-cols-3 max-w-7xl mx-auto  justify-center items-center gap-8">
+      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {templateFolder.map((template) => (
           <div key={template.id}>
-          <motion.div
-          onClick={() => handleClick(template)}
-            key={template.id}
-            className="relative group border border-purple-500 rounded-md shadow-lg overflow-hidden"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Image
-              src={template.src}
-              alt={template.alt}
-              width={800}
-              height={500}
-              className="rounded-lg shadow-md"
-            />
             <motion.div
-              className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
+              onClick={() => handleClick(template)}
+              className="relative group border border-purple-500 rounded-md shadow-lg overflow-hidden"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
-              <motion.a
-                className="text-white flex items-center gap-2"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
+              <Image
+                src={template.src}
+                alt={template.alt}
+                width={800}
+                height={500}
+                className="rounded-lg shadow-md w-full h-auto"
+              />
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
               >
-                View Template
-                <motion.span
-                  initial={{ x: -5, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
+                <motion.a
+                  className="text-white flex items-center gap-2"
+                  whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <ArrowRight size={20} />
-                </motion.span>
-              </motion.a>
+                  View Template
+                  <motion.span
+                    initial={{ x: -5, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ArrowRight size={20} />
+                  </motion.span>
+                </motion.a>
+              </motion.div>
             </motion.div>
-          </motion.div>
-          <h3 className="mt-4 text-lg font-semibold text-gray-800 tracking-wide text-center">
-    {template.alt.replace(/-/g, ' ')}
-  </h3>
+            <h3 className="mt-4 text-base md:text-lg font-semibold text-gray-800 tracking-wide text-center">
+              {template.alt.replace(/-/g, ' ')}
+            </h3>
           </div>
         ))}
       </div>

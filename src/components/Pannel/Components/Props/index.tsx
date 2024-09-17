@@ -237,22 +237,6 @@ const ComponentsProps = () => {
                   }}
                 className="w-[100px] flex flex-col h-[80px]"><TicketSlash /><h4>Banner</h4></Button>
             </div>
-            <div className="flex gap-x-2 justify-between">
-                <Button 
-                variant={"outline"} 
-                className="w-[100px] flex flex-col h-[80px]"
-                ref={(ref) => {
-                    if(ref){ connectors.create(ref, <CustomButton >Buttton</CustomButton>)}}} ><RectangleHorizontal /><h4>Button</h4></Button>
-                <Button 
-                variant={"outline"} 
-                ref={(ref) => {
-                    if (ref) {
-                      connectors.create(ref, <StoreCollectionTemplate />);
-                    }
-                  }}
-                className="w-[100px] flex flex-col h-[80px]"><LayoutDashboard /><h4>Template</h4></Button>
-            </div>
-            
         </div>
     )
 }

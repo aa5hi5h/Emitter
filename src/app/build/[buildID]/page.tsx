@@ -3,7 +3,7 @@
 import ComponentsPannel from "@/components/Pannel/Components";
 import EditorPannel from "@/components/Pannel/Editor";
 import PropertisePannel from "@/components/Pannel/Propertise";
-import { Editor } from "@craftjs/core";
+import { Editor, useEditor } from "@craftjs/core";
 import { Text } from "../../../components/Pannel/Components/Props/Text";
 import { Container } from "@/components/Pannel/Components/Props/Container";
 import { CustomButton } from "@/components/Pannel/Components/Props/Button";
@@ -16,7 +16,7 @@ import { ColorPickerProvider } from "../../Context/ColorPickerContext";
 import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import { Id } from "../../../../convex/_generated/dataModel";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EmptyCanvas } from "@/components/Pannel/Components/Props/EmptyCanvas";
 import { CanvasProvider, useCanvas } from '../../Context/CanvasContext';
 import { CustomInput } from "@/components/Pannel/Components/Props/Input";
@@ -34,7 +34,7 @@ import { PricingSection } from "@/components/Pannel/Components/Props/Pricing";
 import { TemplateText } from "@/components/Pannel/Components/Props/Themes/utils/TemplateText";
 import { TemplateDiv } from "@/components/Pannel/Components/Props/Themes/utils/TemplateDiv";
 import EcommerceNewLandingTemplate from "@/components/Pannel/Components/Props/Themes/EcomLanding";
-import { ArrowUpRight, Box, ChevronRight, CircleUser, Image } from "lucide-react";
+import { ArrowUpRight, Box, ChevronRight, CircleUser, Image, Terminal, Triangle } from "lucide-react";
 import { TemplateImage } from "@/components/Pannel/Components/Props/Themes/utils/TemplateImage";
 import LmsLandingTemplate from "@/components/Pannel/Components/Props/Themes/LmsTemplate";
 import BlogLandingTemplate from "@/components/Pannel/Components/Props/Themes/BlogLanging";
@@ -43,7 +43,14 @@ import { MotionTemplateDiv } from "@/components/Pannel/Components/Props/Themes/u
 import BlogDetailTemplate from "@/components/Pannel/Components/Props/Themes/BlogDetail";
 import { BedDouble, CableCar, Crown, Gem, HandPlatter, Hotel, Menu, Palmtree, Soup, Star, TentTree } from "lucide-react"
 import RentalLandingTemplate from "@/components/Pannel/Components/Props/Themes/RentalLanding";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { resolver } from "../resolver";
+import { Palette } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+
 
 interface BuildProjectProps{
   params:{
@@ -60,26 +67,82 @@ const Build = ({params}: BuildProjectProps) =>  {
   const project = useQuery(api.project.getProject, { projectId:buildID });
   const { checkIfCanvasEmpty } = useCanvas();
 
+  const [activePanel, setActivePanel] = useState<string | null >(null);
+  const [showAlert, setShowAlert] = useState(true);
+
+  const togglePanel = (panel:any) => {
+    setActivePanel(activePanel === panel ? null : panel);
+  };
+
   if(!project){
     return null
   }
+
+  const dismissAlert = () => {
+    setShowAlert(false);
+    localStorage.setItem('mobileAlertShown', 'true');
+  };
+  
   return (
     <SelectionProvider>
       <HoverProvider>
         <ColorPickerProvider>
         <Editor resolver={resolver} onNodesChange={checkIfCanvasEmpty}>
-          <div className="grid grid-cols-6 h-[90vh] ">
-            <div className="col-span-1 border-r border-slate-300  h-full overflow-hidden">
-              <ComponentsPannel />
-            </div>
-            <div className="col-span-4 relative overflow-hidden border-r border-slate-300 h-full">
-              <EditorPannel buildID={project._id} project={project} savedState={project.savedState} />
-            </div>
-            <div className="col-span-1 h-full overflow-hidden" >
-              <PropertisePannel />
-            </div>
-          </div>
-        </Editor>
+      <div className="flex flex-col h-[90vh] md:grid md:grid-cols-6">
+
+      {showAlert && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center md:hidden">
+                  <div className="bg-yellow-50 p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+                    <div className="flex items-center mb-4">
+                      <Terminal className="h-6 w-6 text-yellow-400 mr-2" />
+                      <AlertTitle className="text-lg font-semibold">Tip</AlertTitle>
+                    </div>
+                    <AlertDescription className="mb-4 text-sm">
+                      For easier navigation and a better experience consider using a larger screen if possible.
+                    </AlertDescription>
+                    <Button 
+                      variant="default" 
+                      size="sm" 
+                      onClick={dismissAlert} 
+                      className="w-full"
+                    >
+                      Got it
+                    </Button>
+                  </div>
+                </div>
+              )}
+        {/* Mobile Controls */}
+        <div className="md:hidden flex justify-between p-2 border-b">
+          <button 
+            onClick={() => togglePanel('components')} 
+            className={`p-2 ${activePanel === 'components' ? 'bg-gray-200' : ''}`}
+          >
+            <Menu size={24} />
+          </button>
+          <button 
+            onClick={() => togglePanel('properties')} 
+            className={`p-2 ${activePanel === 'properties' ? 'bg-gray-200' : ''}`}
+          >
+            <Palette size={24} />
+          </button>
+        </div>
+
+        {/* Components Panel */}
+        <div className={`${activePanel === 'components' ? 'block' : 'hidden'} md:block md:col-span-1 border-r border-slate-300 h-full overflow-auto`}>
+          <ComponentsPannel />
+        </div>
+
+        {/* Editor Panel */}
+        <div className="flex-grow md:col-span-4 relative overflow-hidden border-r border-slate-300 h-full">
+          <EditorPannel buildID={project._id} project={project} savedState={project.savedState} />
+        </div>
+
+        {/* Properties Panel */}
+        <div className={`${activePanel === 'properties' ? 'block' : 'hidden'} md:block md:col-span-1 h-full overflow-auto`}>
+          <PropertisePannel activePanel={activePanel} setActivePanel={setActivePanel} />
+        </div>
+      </div>
+    </Editor>
         </ColorPickerProvider>
       </HoverProvider>
     </SelectionProvider>
