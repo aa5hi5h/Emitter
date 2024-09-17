@@ -1,14 +1,18 @@
-"use client";
+"use client"; // Required for client-side hooks
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { getCurrentUser } from "../hooks/use-current-user";
 import { Loader, LogOut } from "lucide-react";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 const UserButton = () => {
     const { signOut } = useAuthActions();
-    const { data, isLoading } = getCurrentUser();
+
+    // Move the useQuery logic here directly
+    const data = useQuery(api.user.currentUser);
+    const isLoading = data === undefined;
 
     if (isLoading) {
         return <Loader className="size-4 animate-spin text-muted-foreground" />;
