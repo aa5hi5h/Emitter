@@ -128,7 +128,7 @@ const TemplateSection: React.FC = () => {
       </div>
       <div className="mt-16 grid grid-cols-3 max-w-7xl mx-auto  justify-center items-center gap-8">
         {templateFolder.map((template) => (
-          <div>
+          <div key={template.id}>
           <motion.div
           onClick={() => handleClick(template)}
             key={template.id}
